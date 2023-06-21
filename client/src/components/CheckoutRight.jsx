@@ -1,0 +1,32 @@
+import currencyFormatter from "../utils/currencyFormatter"
+import CheckoutProduct from "./CheckoutProduct"
+
+const CheckoutRight = () => {
+  return (
+    <div className='flex flex-col w-[300px] gap-5 my-16'>
+        <div className="orderSummary flex flex-col gap-3">
+            <h1 className="text-xl font-semibold my-1">ORDER SUMMERY</h1>
+            <div className="flex justify-between">
+                <h3 className="text-base font-semibold opacity-80">Subtotal (2 items)</h3>
+                <h3 className="text-base font-semibold opacity-80">{currencyFormatter.format(499)}</h3>
+            </div>
+            <div className="flex justify-between">
+                <h3 className="text-base font-semibold opacity-80">Taxes</h3>
+                <h3 className="text-base font-semibold opacity-80">{currencyFormatter.format(49)}</h3>
+            </div>
+            <hr className="border-[1px] border-black"/>
+            <div className="flex justify-between">
+                <h3 className="text-lg font-semibold ">Total</h3>
+                <h3 className="text-lg font-semibold">{currencyFormatter.format(499+49)}</h3>
+            </div>
+        </div>
+        <div className="cartSummery flex flex-col">
+            <h1 className="text-xl font-semibold ">CART SUMMERY</h1>
+            <CheckoutProduct/>
+            <CheckoutProduct/>
+        </div>
+    </div>
+  )
+}
+
+export default CheckoutRight
