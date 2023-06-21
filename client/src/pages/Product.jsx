@@ -1,33 +1,50 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import currencyFormatter from "../utils/currencyFormatter";
 import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 import { addItemToCart } from "../slices/cartSlice";
+import {toast} from "react-hot-toast"
+import { useLocation} from "react-router-dom"
+import { VITE_API_URL } from "../config";
 
-const product = {
-  name: "Code Mode On Hoodie",
-  slug: "code-mode-on-hoodie",
-  imageUrl: "https://m.media-amazon.com/images/I/616m5VorixL._UX522_.jpg",
-  description:
-    'The "Code Mode On Hoodie" is the perfect gift for any developer, programmer or computer science enthusiast. Made of high-quality materials, this comfortable and stylish hoodie features the phrase "Code Mode On" prominently on the front. This hoodie is a nod to the focus and dedication that goes into coding and developing. It\'s perfect for showing off your passion for coding and your dedication to the craft. Whether you\'re working on a project, attending a hackathon or just enjoying a casual coding session, this hoodie will keep you warm and remind you of the joy of coding. Perfect for wearing to work, school, or while working from home, and makes a great gift for any developer, programmer or computer science enthusiast. Show off your passion for coding and grab yours today!',
-  category: "hoodie",
-  quantity: 10,
-  price: 799,
-};
+
+
 const Product = () => {
+
   const [favorite, setFavorite] = useState(false);
+  const [product, setProduct] = useState()
   const dispatch = useDispatch()
+
+  const {pathname} = useLocation()
+  const slug = pathname.split("/")[2]
+
   const handleFavoriteClick = () => {
     setFavorite((prev) => !prev);
   };
   const handleAddToCart =()=>{
     dispatch(addItemToCart(product))
+    toast.success("Item added successfully")
   }
+  useEffect(()=>{
+      const fetchProduct = async()=>{
+        const res = await fetch(`${VITE_API_URL}/product/${slug}`)
+        const {product} = await res.json()
+        
+        setProduct(JSON.parse(JSON.stringify(product)))
+      }
+      fetchProduct()
+  },[])
+
   return (
-    <div className="flex flex-col px-3 py-8 lg:flex-row">
+    <>
+    {
+      product && 
+      <>
+      <div className="flex flex-col px-3 py-8 lg:flex-row">
+
       <img
-        src={product.imageUrl}
+        src={product.imageUrl[0]}
         className="object-contain my-5 w-[400px] mx-auto md:w-[600px] md:h-[400px] "
       />
       <div className="lg:my-7">
@@ -85,9 +102,12 @@ const Product = () => {
         </div>
       </div>
       </div>
-      
-      
     </div>
+      </>
+    }
+    
+    </>
+    
   );
 };
 

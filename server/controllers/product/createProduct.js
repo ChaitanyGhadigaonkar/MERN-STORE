@@ -17,6 +17,7 @@ const createProduct = expressAsyncHandler(async (req, res) => {
     slug,
     imageUrl,
     description,
+    category,
     quantity,
     price,
   });

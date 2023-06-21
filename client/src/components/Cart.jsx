@@ -4,6 +4,7 @@ import currencyFormatter from "../utils/currencyFormatter";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux"
 import { clearCart } from "../slices/cartSlice";
+import { toast } from "react-hot-toast";
 
 
 const Cart = ({setCartVisibility}) => {
@@ -15,6 +16,7 @@ const Cart = ({setCartVisibility}) => {
   const {cart} = useSelector(state=>state.cart)
   const handleClearCart =()=>{
       dispatch(clearCart())
+      toast.success("cart cleared successfully")
   }
   return (
     <div className="top-0 right-0 h-screen flex flex-col items-center md:w-[400px] bg-slate-200 z-50 text-black px-5 py-8 bottom-0 overflow-y-scroll">

@@ -12,18 +12,23 @@ import CheckOut from './pages/CheckOut';
 import { VITE_API_URL } from './config';
 import { useEffect } from 'react';
 import { fetchCarts } from './slices/cartSlice';
-import { useDispatch } from 'react-redux';
+import { fetchProducts} from './slices/productSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import Toast from './components/Toast';
 function App() {
 
   const dispatch = useDispatch()
 
   useEffect(()=>{
-    dispatch(fetchCarts())
+    // dispatch(fetchCarts())
+    dispatch(fetchProducts())
   },[])
+
   return (
     <>
       <BrowserRouter>
         <Navbar/>
+        <Toast/>
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/tshirts' element={<Tshirts/> } />

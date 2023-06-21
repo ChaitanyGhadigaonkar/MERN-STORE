@@ -8,7 +8,7 @@ const CartProduct = ({product}) => {
     const dispatch = useDispatch()
 
     const handleRemoveFromCart=()=>{
-        dispatch(removeItemFromCart(product))
+        dispatch(removeItemFromCart(product._id))
     }
   return (
     <>

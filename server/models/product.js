@@ -13,9 +13,7 @@ const ProductSchema = new mongoose.Schema(
       trim: true,
       unique: [true, 'Slug should be unique']
     },
-    imageUrl: {
-      type: String
-    },
+    imageUrl: [{type:String}],
     description: {
       type: String,
       trim: true

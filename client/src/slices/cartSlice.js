@@ -13,13 +13,10 @@ const cartSlice = createSlice({
         state.cart.push(action.payload)
     },
     removeItemFromCart(state, action) {
-      return state.cart.filter((item) => {
-        console.log(action.payload)
-        item._id === action.payload._id;
-      });
+      return state.cart.filter((product) => product._id !== action.payload);
     },
     clearCart(state, action){
-      return []
+      state.cart = []
     }
   },
   extraReducers: (builder) => {
