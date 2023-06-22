@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import firstImage from "../assets/1.jpg"
-import secondImage from "../assets/2.jpg"
+import firstImage from "../assets/slider1.jpg"
+import secondImage from "../assets/slider2.jpg"
 import thirdImage from "../assets/3.jpg"
 import {AiOutlineRightCircle,AiOutlineLeftCircle} from "react-icons/ai"
 
@@ -13,25 +13,21 @@ const sliderImages = [
       title: "title 2",
       url:secondImage
     },
-    {
-      title: "title 3",
-      url:thirdImage
-    }
   ];
 const Carousel = () => {
 
     const [counter, setCounter] = useState(0);
     const moveRight = () =>{
-        if(counter===2){
+        if(counter===1){
           setCounter(0)
         }
-        if(counter<2){
+        if(counter<1){
             setCounter(prev => prev+1)
         }
     }
     const moveLeft = () =>{
       if(counter===0){
-        setCounter(2)
+        setCounter(1)
       }
         if(counter>0){
             setCounter(prev => prev-1)

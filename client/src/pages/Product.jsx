@@ -7,6 +7,7 @@ import { addItemToCart } from "../slices/cartSlice";
 import {toast} from "react-hot-toast"
 import { useLocation} from "react-router-dom"
 import { VITE_API_URL } from "../config";
+import ProductsMoreImage from "../components/ProductsMoreImage";
 
 
 
@@ -14,9 +15,12 @@ const Product = () => {
 
   const [favorite, setFavorite] = useState(false);
   const [product, setProduct] = useState()
-  const dispatch = useDispatch()
+  const [productImage, setProductImage] = useState()
 
+
+  const dispatch = useDispatch()
   const {pathname} = useLocation()
+
   const slug = pathname.split("/")[2]
 
   const handleFavoriteClick = () => {
@@ -30,8 +34,8 @@ const Product = () => {
       const fetchProduct = async()=>{
         const res = await fetch(`${VITE_API_URL}/product/${slug}`)
         const {product} = await res.json()
-        
         setProduct(JSON.parse(JSON.stringify(product)))
+        setProductImage(product.imageUrl[0])
       }
       fetchProduct()
   },[])
@@ -41,12 +45,22 @@ const Product = () => {
     {
       product && 
       <>
-      <div className="flex flex-col px-3 py-8 lg:flex-row">
-
-      <img
-        src={product.imageUrl[0]}
+      <div className="flex flex-col px-3 py-8 ">
+        <div className="flex flex-col items-center ">
+        <img
+        src={productImage}
         className="object-contain my-5 w-[400px] mx-auto md:w-[600px] md:h-[400px] "
       />
+          <div className="product-images w-full flex items-center my-5 justify-center gap-1 md:gap-5 md:h-fit ">
+        {
+          product.imageUrl.map((image)=>{
+            return <ProductsMoreImage key={product._id} image={image} setProductImage={setProductImage} productImage={productImage}/>
+          })
+        }
+      </div>
+        </div>
+      
+      
       <div className="lg:my-7">
       <div className="">
         <h4 className="text-base text-slate-600 font-semibold lg:text-lg">

@@ -20,7 +20,6 @@ function App() {
   const dispatch = useDispatch()
 
   useEffect(()=>{
-    // dispatch(fetchCarts())
     dispatch(fetchProducts())
   },[])
 

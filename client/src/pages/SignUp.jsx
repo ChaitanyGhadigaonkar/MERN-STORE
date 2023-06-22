@@ -1,15 +1,49 @@
 import React, { useState } from "react";
 import {useNavigate} from "react-router-dom"
+import {VITE_API_URL} from "../config"
+import {toast} from "react-hot-toast"
+
+
+
 const SignUp = () => {
   const navigate = useNavigate()
 
   const [credentials, setCredentials] = useState({name:"",email:"",password:"",cPassword:""})
+
   const handleOnChange =(e)=>{
     // console.log(credentials)
     setCredentials({...credentials , [e.target.name]:e.target.value})
   }
+
+const signUp =async()=>{
+  try {
+    const res = await fetch(`${VITE_API_URL}/auth/register`,{
+      method:"POST",
+      body: JSON.stringify({
+          name:credentials.name,
+          email:credentials.email,
+          password:credentials.password
+      }
+      ),
+      headers:{
+        "content-type":"application/json"
+      }
+      })
+      const user = await res.json()
+      console.log(user)
+      toast.success("success")
+  } catch (err) {
+    toast.error("Something went's wrong. Please try again.")
+  }
+  
+}
+
   const handleSubmit=(e)=>{
       e.preventDefault();
+      if(!credentials.name|| !credentials.email || !credentials.password || !credentials.cPassword) {
+        toast.error("All fields are required")
+      }
+      signUp()
   }
   return (
     <div className="flex flex-1 flex-col items-center justify-center gap-2 px-2 ">
