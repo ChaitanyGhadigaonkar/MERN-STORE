@@ -1,5 +1,7 @@
 import {useNavigate} from "react-router-dom"
 import { useState } from "react"
+import { toast } from "react-hot-toast"
+import { VITE_API_URL } from "../config"
 
 const Login = () => {
   const navigate = useNavigate()
@@ -7,8 +9,37 @@ const Login = () => {
   const handleOnChange =(e)=>{
     setCredentials({...credentials , [e.target.name]:e.target.value})
   }
+
+  const login =async()=>{
+    try {
+      const res = await fetch(`${VITE_API_URL}/auth/login`,{
+        method:"POST",
+        body: JSON.stringify({
+            email:credentials.email,
+            password:credentials.password
+        }
+        ),
+        headers:{
+          "content-type":"application/json"
+        }
+        })
+        const result = await res.json()
+        toast.success(result.msg)
+        navigate("/tshirts")
+    } catch (err) {
+      toast.error(err.message)
+    }
+    
+  }
+
+
   const handleSubmit=(e)=>{
       e.preventDefault();
+      if(!credentials.email || !credentials.password){
+        toast.error("Email or password required")
+        return 
+      }
+      login()
   }
   return (
 

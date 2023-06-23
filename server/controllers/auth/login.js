@@ -1,5 +1,5 @@
 import expressAsyncHandler from 'express-async-handler';
-import { User } from '../../models/index.js';
+import User from "../../models/user.js";
 import generateToken from '../../utils/generateToken.js';
 
 const login = expressAsyncHandler(async (req, res) => {

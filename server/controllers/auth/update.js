@@ -1,4 +1,4 @@
-import { User } from "../../models/index.js";
+import User from "../../models/user.js";
 import expressAsyncHandler from "express-async-handler";
 
 const update = expressAsyncHandler(async (req, res) => {

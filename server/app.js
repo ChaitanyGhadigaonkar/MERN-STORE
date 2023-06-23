@@ -6,6 +6,7 @@ import connectDB from './db/conn.js';
 import errorHandler from './middleware/errorHandler.js';
 import cookieParser from 'cookie-parser';
 import cors from  "cors";
+import cartRouter from './routes/cartRoutes.js';
 connectDB();
 
 const app = express();
@@ -16,6 +17,7 @@ app.use(cookieParser());
 // routes
 app.use('/api/auth', userRouter);
 app.use('/api/product', productRouter);
+app.use('/api/cart', cartRouter);
 
 // error handler
 app.use(errorHandler);

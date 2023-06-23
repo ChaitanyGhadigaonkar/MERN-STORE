@@ -29,9 +29,9 @@ const signUp =async()=>{
         "content-type":"application/json"
       }
       })
-      const user = await res.json()
-      console.log(user)
+      const result = await res.json()
       toast.success("success")
+      navigate("/login")
   } catch (err) {
     toast.error("Something went's wrong. Please try again.")
   }
