@@ -2,13 +2,33 @@ import {MdDelete} from "react-icons/md"
 import currencyFormatter from "../utils/currencyFormatter"
 import { useDispatch } from "react-redux"
 import { removeItemFromCart } from "../slices/cartSlice"
-
+import { VITE_API_URL } from "../config"
 
 const CartProduct = ({product}) => {
     const dispatch = useDispatch()
 
+    const removeProduct =async()=>{
+        try {
+            const res = await fetch(`${VITE_API_URL}/cart/delete`,{
+                method:"DELETE",
+                headers: {
+                  "content-type": "application/json",
+                },
+                credentials: "include",
+                body: JSON.stringify({
+                    product :{
+                      name: product.name,
+                    }
+                })
+              })
+              const result = await res.json()
+        } catch (err) {
+            console.log(err)
+        }
+    }
     const handleRemoveFromCart=()=>{
-        dispatch(removeItemFromCart(product._id))
+        removeProduct()
+        dispatch(removeItemFromCart(product))
     }
   return (
     <>

@@ -31,7 +31,7 @@ const addProductToTheCart = expressAsyncHandler(async(req,res)=>{
 
     const result = await Cart.findByIdAndUpdate( cart._id, {products : productsArray})
 
-    res.status(201).json({success:true, msg:"Added to the cart successfully"})
+    res.status(200).json({success:true, msg:"Added to the cart successfully",product})
 })
 
 export default addProductToTheCart

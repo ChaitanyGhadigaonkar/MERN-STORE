@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import {toast} from "react-hot-toast"
 import { STATUSES } from "../utils/status";
 import {VITE_API_URL} from "../config"
 
@@ -6,17 +7,35 @@ const cartSlice = createSlice({
   name: "cart",
   initialState:{ 
       cart: [],
-      status: 'idle'
+      status: 'idle',
+      total:0
   },
   reducers: {
     addItemToCart(state, action) {
-        state.cart.push(action.payload)
+        let isExists = false
+        state.cart.forEach((product)=>{
+          if(product.name === action.payload.name){
+              isExists = true
+          }
+        })
+        if(isExists){
+          toast.error("Item already in the cart")
+          return state
+        }else{
+          state.cart.push(action.payload)
+          state.total+= action.payload.price
+          toast.success("Item added successfully")
+        }
     },
     removeItemFromCart(state, action) {
-      return state.cart.filter((product) => product._id !== action.payload);
-    },
+      const newArray = state.cart.filter((product) => product.name !== action.payload.name);
+        toast.success("Item removed successfully")
+        state.total -= action.payload.price
+        state.cart = newArray
+      },
     clearCart(state, action){
       state.cart = []
+      state.total = 0
     }
   },
   extraReducers: (builder) => {
@@ -29,7 +48,6 @@ const cartSlice = createSlice({
         state.status = STATUSES.IDLE
       })
       .addCase(fetchCarts.rejected, (state, action) => {
-        console.log("rejected")
         state.status = STATUSES.ERROR
       });
   },
@@ -38,8 +56,16 @@ const cartSlice = createSlice({
 // thunks
 
 export const fetchCarts = createAsyncThunk("carts/fetch", async () => {
-  const res = await fetch(`${VITE_API_URL}/product`);
+  const res = await fetch(`${VITE_API_URL}/cart`,{
+    headers:{
+      "content-type":"application/json",
+    },
+    credentials:"include"
+  });
   const {products} = await res.json();
+  if (products === undefined){
+      return []
+  }
   return products;
 });
 

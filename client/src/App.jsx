@@ -9,7 +9,6 @@ import SignUp from "./pages/SignUp"
 import Product from './pages/product';
 import Caps from './pages/Caps';
 import CheckOut from './pages/CheckOut';
-import { VITE_API_URL } from './config';
 import { useEffect } from 'react';
 import { fetchCarts } from './slices/cartSlice';
 import { fetchProducts} from './slices/productSlice';
@@ -21,6 +20,7 @@ function App() {
 
   useEffect(()=>{
     dispatch(fetchProducts())
+    dispatch(fetchCarts())
   },[])
 
   return (

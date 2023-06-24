@@ -1,15 +1,17 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Cart from "../components/Cart"
 import {GiHamburgerMenu} from 'react-icons/gi'
 import {Link} from "react-router-dom"
 import {BsSearch} from "react-icons/bs"
-import {AiOutlineShoppingCart} from "react-icons/ai"
+import {AiOutlineShoppingCart,AiOutlineDown} from "react-icons/ai"
 import {useSelector} from "react-redux"
 const Navbar = () => {
   const [show,setShow] = useState(false)
+
   const [cartVisibility, setCartVisibility] = useState(false)
 
   const {cart} = useSelector(state=>state.cart)
+  const {userInfo} = useSelector(state=>state.user)
   const handleHamClick = ()=>{
       setShow((prev)=>!prev)
   }
@@ -17,6 +19,9 @@ const Navbar = () => {
   const handleSearch=(e)=>{
     setSearchQuery(e.target.value)
   }
+
+
+  
   return (
     <>
     <div className={`cart fixed top-0 right-0 z-50 transition-transform duration-300 ${!cartVisibility?"translate-x-[1000px]": "translate-x-0"}`} id='cart-div'>
@@ -42,8 +47,15 @@ const Navbar = () => {
           <Link to={"/tshirts"} className='text-base font-semibold font-playfair' onClick={()=>{setShow(false)}} >T shirts</Link>
           <Link to={"/hoodies"} className='text-base font-semibold font-playfair' onClick={()=>{setShow(false)}} >Hoodies</Link>
           <Link to={"/caps"} className='text-base font-semibold font-playfair' onClick={()=>{setShow(false)}} >Caps</Link>
-          <Link to={"/login"} className='text-base font-semibold font-playfair' onClick={()=>{setShow(false)}} >Login</Link>
-          <Link to={"/signup"} className='text-base font-semibold font-playfair' onClick={()=>{setShow(false)}} >Sign Up</Link>
+          {
+            userInfo !== null ?
+            <Link to={"/login"} className='flex items-center gap-1 text-base font-semibold font-playfair' onClick={()=>{setShow(false)}} >{userInfo.name.split(" ")[0]}<AiOutlineDown className='object-contain'/></Link> : 
+            <>
+              <Link to={"/login"} className='text-base font-semibold font-playfair' onClick={()=>{setShow(false)}} >Login</Link>
+              <Link to={"/signup"} className='text-base font-semibold font-playfair' onClick={()=>{setShow(false)}} >Sign Up</Link>
+            </>
+          }
+          
       </div>
       <div className="hamburger absolute right-3 top-3 md:hidden">
         <GiHamburgerMenu className='w-7 h-7 cursor-pointer' onClick={handleHamClick}/>

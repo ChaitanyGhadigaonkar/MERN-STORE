@@ -8,6 +8,7 @@ import {toast} from "react-hot-toast"
 import { useLocation} from "react-router-dom"
 import { VITE_API_URL } from "../config";
 import ProductsMoreImage from "../components/ProductsMoreImage";
+import addProductToTheCart from "../../../server/controllers/cart/addProductToTheCart";
 
 
 
@@ -26,9 +27,34 @@ const Product = () => {
   const handleFavoriteClick = () => {
     setFavorite((prev) => !prev);
   };
+
+  const addFunction = async()=>{
+    try {
+      const res = await fetch(`${VITE_API_URL}/cart/add`,{
+        method:"POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({
+            product :{
+              name: product.name,
+              price: product.price,
+              imageUrl : product.imageUrl[0],
+              quantity:1
+            }
+        })
+      })
+      const result = await res.json()
+      dispatch(addProductToTheCart(result.product))
+    } catch (err) {
+      console.log(err)
+    }
+  }
   const handleAddToCart =()=>{
+    addFunction()
     dispatch(addItemToCart(product))
-    toast.success("Item added successfully")
+    
   }
   useEffect(()=>{
       const fetchProduct = async()=>{
@@ -54,7 +80,7 @@ const Product = () => {
           <div className="product-images w-full flex items-center my-5 justify-center gap-1 md:gap-5 md:h-fit ">
         {
           product.imageUrl.map((image)=>{
-            return <ProductsMoreImage key={product._id} image={image} setProductImage={setProductImage} productImage={productImage}/>
+            return <ProductsMoreImage key={image} image={image} setProductImage={setProductImage} productImage={productImage}/>
           })
         }
       </div>
