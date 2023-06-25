@@ -30,6 +30,7 @@ const Login = () => {
       });
       const { userInfo, msg } = await res.json();
       dispatch(setUserCredentials(userInfo));
+      setCredentials({ email: "", password: "" })
       toast.success(msg);
       // navigate("/tshirts")
     } catch (err) {

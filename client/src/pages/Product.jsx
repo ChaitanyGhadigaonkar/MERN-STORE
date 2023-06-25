@@ -39,6 +39,7 @@ const Product = () => {
         body: JSON.stringify({
             product :{
               name: product.name,
+              slug:product.slug,
               price: product.price,
               imageUrl : product.imageUrl[0],
               quantity:1

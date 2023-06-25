@@ -36,6 +36,9 @@ const cartSlice = createSlice({
     clearCart(state, action){
       state.cart = []
       state.total = 0
+    },
+    setInitialTotal(state, action){
+      state.total = action.type
     }
   },
   extraReducers: (builder) => {
@@ -45,6 +48,11 @@ const cartSlice = createSlice({
       })
       .addCase(fetchCarts.fulfilled, (state, action) => {
         state.cart = action.payload;
+        let total = 0;
+        state.cart.forEach((product)=>{
+            total += product.price 
+        })
+        state.total = total
         state.status = STATUSES.IDLE
       })
       .addCase(fetchCarts.rejected, (state, action) => {
@@ -55,7 +63,7 @@ const cartSlice = createSlice({
 
 // thunks
 
-export const fetchCarts = createAsyncThunk("carts/fetch", async () => {
+export const fetchCarts = createAsyncThunk("carts/fetch", async (state, action) => {
   const res = await fetch(`${VITE_API_URL}/cart`,{
     headers:{
       "content-type":"application/json",
@@ -69,6 +77,6 @@ export const fetchCarts = createAsyncThunk("carts/fetch", async () => {
   return products;
 });
 
-export const { addItemToCart, removeItemFromCart, clearCart } = cartSlice.actions;
+export const { addItemToCart, removeItemFromCart, clearCart,setInitialTotal } = cartSlice.actions;
 
 export default cartSlice.reducer;

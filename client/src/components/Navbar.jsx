@@ -4,6 +4,7 @@ import {GiHamburgerMenu} from 'react-icons/gi'
 import {Link} from "react-router-dom"
 import {BsSearch} from "react-icons/bs"
 import {AiOutlineShoppingCart,AiOutlineDown} from "react-icons/ai"
+import {MdLogout} from "react-icons/md"
 import {useSelector} from "react-redux"
 const Navbar = () => {
   const [show,setShow] = useState(false)
@@ -27,7 +28,7 @@ const Navbar = () => {
     <div className={`cart fixed top-0 right-0 z-50 transition-transform duration-300 ${!cartVisibility?"translate-x-[1000px]": "translate-x-0"}`} id='cart-div'>
       <Cart setCartVisibility={setCartVisibility}/>
       </div>
-    <div className='flex flex-col items-center overflow-x-hidden md:flex-row shadow-md md:justify-between'>
+    <div className='flex flex-col items-center overflow-x-hidden md:flex-row md:justify-between'>
       <div className="logo w-[100%] flex flex-col items-center py-3 px-3 self-center gap-8  justify-center md:flex-row md:w-auto md:flex-1 md:justify-between md:m-0">
           <Link className='text-black-100 font-semibold text-xl cursor-pointer md:mx-2' to={'/'} >MERN STORE
           </Link>
@@ -47,14 +48,22 @@ const Navbar = () => {
           <Link to={"/tshirts"} className='text-base font-semibold font-playfair' onClick={()=>{setShow(false)}} >T shirts</Link>
           <Link to={"/hoodies"} className='text-base font-semibold font-playfair' onClick={()=>{setShow(false)}} >Hoodies</Link>
           <Link to={"/caps"} className='text-base font-semibold font-playfair' onClick={()=>{setShow(false)}} >Caps</Link>
-          {
-            userInfo !== null ?
-            <Link to={"/login"} className='flex items-center gap-1 text-base font-semibold font-playfair' onClick={()=>{setShow(false)}} >{userInfo.name.split(" ")[0]}<AiOutlineDown className='object-contain'/></Link> : 
-            <>
-              <Link to={"/login"} className='text-base font-semibold font-playfair' onClick={()=>{setShow(false)}} >Login</Link>
-              <Link to={"/signup"} className='text-base font-semibold font-playfair' onClick={()=>{setShow(false)}} >Sign Up</Link>
-            </>
-          }
+          
+            {userInfo !== null ?
+              <div className=''>
+                <Link to={"/login"} className='flex items-center gap-1 text-base font-semibold font-playfair' onClick={()=>{setShow(false)}} >
+                  {userInfo.name.split(" ")[0]}
+                  <AiOutlineDown className='text-[12px] object-contain' onClick={()=>{}}/>
+                </Link> 
+                
+                </div> : 
+                <>
+                  <Link to={"/login"} className='text-base font-semibold font-playfair' onClick={()=>{setShow(false)}} >Login</Link>
+                  <Link to={"/signup"} className='text-base font-semibold font-playfair' onClick={()=>{setShow(false)}} >Sign Up</Link>
+                </>
+            }
+            
+          
           
       </div>
       <div className="hamburger absolute right-3 top-3 md:hidden">
@@ -66,5 +75,12 @@ const Navbar = () => {
     
   )
 }
+
+/*
+<div className="fixed bg-slate-100 w-fit h-fit px-2 py-2 shadow-md rounded-md flex flex-col z-[20] gap-1">
+  <Link to={"/user"} className='text-base px-2 font-semibold font-playfair' onClick={()=>{setShow(false)}} >Account</Link>
+  <Link to={"/user"} className='flex items-center gap-2 text-base px-2 font-semibold font-playfair' onClick={()=>{setShow(false)}} >Logout <MdLogout/></Link>
+</div>
+*/
 
 export default Navbar

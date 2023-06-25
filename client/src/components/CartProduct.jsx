@@ -3,10 +3,11 @@ import currencyFormatter from "../utils/currencyFormatter"
 import { useDispatch } from "react-redux"
 import { removeItemFromCart } from "../slices/cartSlice"
 import { VITE_API_URL } from "../config"
+import { useNavigate } from "react-router-dom"
 
 const CartProduct = ({product}) => {
     const dispatch = useDispatch()
-
+    const navigate = useNavigate()
     const removeProduct =async()=>{
         try {
             const res = await fetch(`${VITE_API_URL}/cart/delete`,{
@@ -35,7 +36,7 @@ const CartProduct = ({product}) => {
     <div className='w-full flex items-center flex-col '>
         <div className="top w-full flex items-center py-2 justify-between">
             <div className="flex gap-2 items-center">
-                <img src={product.imageUrl} alt="product image" className="w-24 h-24 rounded-md" />
+                <img src={product.imageUrl} alt="product image" className="w-24 h-24 rounded-md cursor-pointer" onClick={()=>navigate(`/product/${product.slug}`)} />
                 <h3 className="text-base font-semibold">{product.name}</h3>
             </div>
             <div className="px-3">

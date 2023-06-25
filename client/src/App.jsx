@@ -10,14 +10,14 @@ import Product from './pages/product';
 import Caps from './pages/Caps';
 import CheckOut from './pages/CheckOut';
 import { useEffect } from 'react';
-import { fetchCarts } from './slices/cartSlice';
+import { fetchCarts, setInitialTotal } from './slices/cartSlice';
 import { fetchProducts} from './slices/productSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import Toast from './components/Toast';
 function App() {
 
   const dispatch = useDispatch()
-
+  const {cart} = useSelector(state=>state.cart)
   useEffect(()=>{
     dispatch(fetchProducts())
     dispatch(fetchCarts())

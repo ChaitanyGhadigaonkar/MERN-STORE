@@ -10,6 +10,7 @@ import { toast } from "react-hot-toast";
 const Cart = ({setCartVisibility}) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+
   const goToCheckOut =()=>{
       navigate("/checkout")
   }
