@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { VITE_API_URL } from "../config";
 import { useDispatch } from "react-redux";
@@ -46,6 +46,11 @@ const Login = () => {
     }
     login();
   };
+  useEffect(()=>{
+    if(localStorage.getItem("userInfo")){
+      navigate("/tshirts")
+    }
+  })
   return (
     <div className="flex flex-1 flex-col items-center justify-center gap-2 px-2">
       <h1 className="text-xl font-semibold my-2">Login Here</h1>

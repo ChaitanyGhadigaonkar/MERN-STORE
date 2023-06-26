@@ -4,6 +4,7 @@ import getAllProductsFromCart from "../controllers/cart/getAllProducts.js";
 import addProductToTheCart from "../controllers/cart/addProductToTheCart.js";
 import removeProductFromCart from "../controllers/cart/removeProductFromCart.js";
 import updateQuantity from "../controllers/cart/updateQuantity.js";
+import clearAllProducts from "../controllers/cart/clearAllProducts.js";
 
 
 const cartRouter = express.Router();
@@ -19,6 +20,8 @@ cartRouter.post("/add",protect, addProductToTheCart)
 cartRouter.delete("/delete", protect, removeProductFromCart)
 
 cartRouter.put("/update", protect, updateQuantity)
+
+cartRouter.put("/clearAll", protect, clearAllProducts)
 
 
 export default cartRouter;

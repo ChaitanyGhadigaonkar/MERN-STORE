@@ -5,17 +5,34 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux"
 import { clearCart, fetchCarts } from "../slices/cartSlice";
 import { toast } from "react-hot-toast";
+import { VITE_API_URL } from "../config";
 
 
 const Cart = ({setCartVisibility}) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
+  const clearAllProductsFromCart = async()=>{
+    try {
+      const res = await fetch(`${VITE_API_URL}/cart/clearAll`,{
+        method:"PUT",
+        headers: {
+          "content-type": "application/json",
+        },
+        credentials: "include",
+      })
+      const result = await res.json()
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   const goToCheckOut =()=>{
       navigate("/checkout")
   }
   const {cart,total} = useSelector(state=>state.cart)
   const handleClearCart =()=>{
+      clearAllProductsFromCart();
       dispatch(clearCart())
       toast.success("cart cleared successfully")
   }

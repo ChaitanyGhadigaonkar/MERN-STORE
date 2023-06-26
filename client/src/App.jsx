@@ -14,6 +14,7 @@ import { fetchCarts, setInitialTotal } from './slices/cartSlice';
 import { fetchProducts} from './slices/productSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import Toast from './components/Toast';
+import SearchProducts from './pages/SearchProducts';
 function App() {
 
   const dispatch = useDispatch()
@@ -37,6 +38,7 @@ function App() {
           <Route path='/checkout' element={<CheckOut />} />
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<SignUp />} />
+          <Route path='/products' element={<SearchProducts />} />
         </Routes>
         <Footer />
       </BrowserRouter>

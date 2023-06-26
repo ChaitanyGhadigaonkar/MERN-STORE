@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react'
 import Cart from "../components/Cart"
 import {GiHamburgerMenu} from 'react-icons/gi'
-import {Link} from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom"
 import {BsSearch} from "react-icons/bs"
 import {AiOutlineShoppingCart,AiOutlineDown} from "react-icons/ai"
 import {MdLogout} from "react-icons/md"
 import {useSelector} from "react-redux"
 const Navbar = () => {
   const [show,setShow] = useState(false)
-
+  const navigate = useNavigate()
   const [cartVisibility, setCartVisibility] = useState(false)
 
   const {cart} = useSelector(state=>state.cart)
@@ -17,10 +17,13 @@ const Navbar = () => {
       setShow((prev)=>!prev)
   }
   const [searchQuery, setSearchQuery] = useState("")
-  const handleSearch=(e)=>{
+  const handleSearchChange=(e)=>{
     setSearchQuery(e.target.value)
   }
-
+  const handleSearch =(e)=>{
+    e.preventDefault()
+    navigate(`/products?search=${searchQuery}`)
+  }
 
   
   return (
@@ -33,11 +36,11 @@ const Navbar = () => {
           <Link className='text-black-100 font-semibold text-xl cursor-pointer md:mx-2' to={'/'} >MERN STORE
           </Link>
           
-          <div className="search flex items-center gap-1">
-            <input type="text" name="search" className='text-base w-64 px-2 py-1 border-theme border-[2px] rounded-md outline-0 md:w-72' value={searchQuery} onChange={handleSearch}/>
-            <button className='border-none rounded-lg px-3 py-3 text-base bg-pink-500 hover:bg-pink-600 ' onClick={()=>{}} ><BsSearch className='text-base w-3 h-3 relative'/>
+          <form className="search flex items-center gap-1">
+            <input type="text" name="search" className='text-base w-64 px-2 py-1 border-theme border-[2px] rounded-md outline-0 md:w-72' value={searchQuery} onChange={handleSearchChange}/>
+            <button className='border-none rounded-lg px-3 py-3 text-base bg-pink-500 hover:bg-pink-600 ' onClick={handleSearch} ><BsSearch className='text-base w-3 h-3 relative'/>
             </button>
-          </div>
+          </form>
           <div className="cart cursor-pointer relative ">
             <AiOutlineShoppingCart className='text-3xl text-pink-500  ' onClick={()=>setCartVisibility(true)}/>
           <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-blue-500 border-white rounded-full -top-3 -right-2">{cart ? cart.length : 0}
