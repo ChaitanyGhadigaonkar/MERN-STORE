@@ -32,7 +32,7 @@ const Login = () => {
       dispatch(setUserCredentials(userInfo));
       setCredentials({ email: "", password: "" })
       toast.success(msg);
-      // navigate("/tshirts")
+      navigate("/tshirts")
     } catch (err) {
       toast.error(err.message);
     }
@@ -47,7 +47,7 @@ const Login = () => {
     login();
   };
   useEffect(()=>{
-    if(localStorage.getItem("userInfo")){
+    if(localStorage.getItem("userInfo")!==null){
       navigate("/tshirts")
     }
   })

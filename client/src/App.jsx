@@ -15,14 +15,16 @@ import { fetchProducts} from './slices/productSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import Toast from './components/Toast';
 import SearchProducts from './pages/SearchProducts';
+import Dashboard from './pages/Dashboard';
 function App() {
 
   const dispatch = useDispatch()
   const {cart} = useSelector(state=>state.cart)
+  const {userInfo} = useSelector(state=>state.user)
   useEffect(()=>{
     dispatch(fetchProducts())
     dispatch(fetchCarts())
-  },[])
+  },[userInfo])
 
   return (
     <>
@@ -39,6 +41,7 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<SignUp />} />
           <Route path='/products' element={<SearchProducts />} />
+          <Route path='/dashboard/:field' element={<Dashboard />} />
         </Routes>
         <Footer />
       </BrowserRouter>

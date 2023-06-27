@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {useNavigate} from "react-router-dom"
 import {VITE_API_URL} from "../config"
 import {toast} from "react-hot-toast"
@@ -46,7 +46,7 @@ const signUp =async()=>{
       signUp()
   }
   useEffect(()=>{
-    if(localStorage.getItem("userInfo")){
+    if(localStorage.getItem("userInfo")!==null){
       navigate("/tshirts")
     }
   })

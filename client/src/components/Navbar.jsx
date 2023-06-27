@@ -5,10 +5,14 @@ import {Link, useNavigate} from "react-router-dom"
 import {BsSearch} from "react-icons/bs"
 import {AiOutlineShoppingCart,AiOutlineDown} from "react-icons/ai"
 import {MdLogout} from "react-icons/md"
-import {useSelector} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
+import logout from '../utils/logout'
+import { toast } from 'react-hot-toast'
+import { setUserCredentials } from '../slices/userSlice'
 const Navbar = () => {
   const [show,setShow] = useState(false)
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const [cartVisibility, setCartVisibility] = useState(false)
 
   const {cart} = useSelector(state=>state.cart)
@@ -23,6 +27,16 @@ const Navbar = () => {
   const handleSearch =(e)=>{
     e.preventDefault()
     navigate(`/products?search=${searchQuery}`)
+  }
+  const handleLogout=async()=>{
+    setShow(false)
+    const success = await logout();
+    if(success){
+      toast.success("Logout successfully")
+      dispatch(setUserCredentials(null))
+    }else{
+      toast.error("Something went's wrong")
+    }
   }
 
   
@@ -43,31 +57,26 @@ const Navbar = () => {
           </form>
           <div className="cart cursor-pointer relative ">
             <AiOutlineShoppingCart className='text-3xl text-pink-500  ' onClick={()=>setCartVisibility(true)}/>
+            
           <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-blue-500 border-white rounded-full -top-3 -right-2">{cart ? cart.length : 0}
           </div>
           </div>
       </div>
-      <div className={`right flex gap-2 items-center justify-end py-2 transition-transform duration-300 ${show ? "translate-x-0 flex-col md:flex-row": "translate-x-[1000px] flex-row"} md:translate-x-0 lg:flex-row md:gap-6 md:px-4 md:flex-1`} >
+      <div className={`right flex gap-2 relative items-center justify-end py-2 transition-transform duration-300 ${show ? "translate-x-0 flex-col md:flex-row": "translate-x-[1000px] flex-row"} md:translate-x-0 lg:flex-row md:gap-6 md:px-4 md:flex-1`} >
           <Link to={"/tshirts"} className='text-base font-semibold font-playfair' onClick={()=>{setShow(false)}} >T shirts</Link>
           <Link to={"/hoodies"} className='text-base font-semibold font-playfair' onClick={()=>{setShow(false)}} >Hoodies</Link>
           <Link to={"/caps"} className='text-base font-semibold font-playfair' onClick={()=>{setShow(false)}} >Caps</Link>
           
             {userInfo !== null ?
-              <div className=''>
-                <Link to={"/login"} className='flex items-center gap-1 text-base font-semibold font-playfair' onClick={()=>{setShow(false)}} >
-                  {userInfo.name.split(" ")[0]}
-                  <AiOutlineDown className='text-[12px] object-contain' onClick={()=>{}}/>
-                </Link> 
-                
+              <div className='flex items-center'>
+                <Link to={"/dashboard"} className='text-base px-2 font-semibold font-playfair' onClick={()=>{setShow(false)}} >Dashboard</Link>
+                <Link to={"/"} className='flex items-center gap-2 text-base px-2 font-semibold font-playfair' onClick={handleLogout} >Logout <MdLogout/></Link>
                 </div> : 
                 <>
                   <Link to={"/login"} className='text-base font-semibold font-playfair' onClick={()=>{setShow(false)}} >Login</Link>
                   <Link to={"/signup"} className='text-base font-semibold font-playfair' onClick={()=>{setShow(false)}} >Sign Up</Link>
                 </>
             }
-            
-          
-          
       </div>
       <div className="hamburger absolute right-3 top-3 md:hidden">
         <GiHamburgerMenu className='w-7 h-7 cursor-pointer' onClick={handleHamClick}/>
@@ -80,10 +89,10 @@ const Navbar = () => {
 }
 
 /*
-<div className="fixed bg-slate-100 w-fit h-fit px-2 py-2 shadow-md rounded-md flex flex-col z-[20] gap-1">
-  <Link to={"/user"} className='text-base px-2 font-semibold font-playfair' onClick={()=>{setShow(false)}} >Account</Link>
-  <Link to={"/user"} className='flex items-center gap-2 text-base px-2 font-semibold font-playfair' onClick={()=>{setShow(false)}} >Logout <MdLogout/></Link>
-</div>
+    {/* <Link to={"/login"} className='flex items-center gap-1 text-base font-semibold font-playfair' onClick={()=>{setShow(false)}} >
+                  {userInfo.name.split(" ")[0]}
+                  <AiOutlineDown className='text-[12px] object-contain' onClick={()=>{}}/>
+    </Link>  
 */
 
 export default Navbar
