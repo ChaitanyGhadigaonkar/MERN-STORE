@@ -46,7 +46,7 @@ const signUp =async()=>{
       signUp()
   }
   useEffect(()=>{
-    if(localStorage.getItem("userInfo")!==null){
+    if(localStorage.getItem("userInfo")===null){
       navigate("/tshirts")
     }
   })

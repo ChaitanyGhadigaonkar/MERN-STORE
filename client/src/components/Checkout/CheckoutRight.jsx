@@ -1,4 +1,4 @@
-import currencyFormatter from "../utils/currencyFormatter"
+import currencyFormatter from "../../utils/currencyFormatter"
 import CheckoutProduct from "./CheckoutProduct"
 
 const CheckoutRight = () => {

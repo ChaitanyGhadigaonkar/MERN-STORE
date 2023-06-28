@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import firstImage from "../assets/slider1.jpg"
-import secondImage from "../assets/slider2.jpg"
-import thirdImage from "../assets/3.jpg"
+import firstImage from "../../assets/slider1.jpg"
+import secondImage from "../../assets/slider2.jpg"
+import thirdImage from "../../assets/3.jpg"
 import {AiOutlineRightCircle,AiOutlineLeftCircle} from "react-icons/ai"
 
 const sliderImages = [

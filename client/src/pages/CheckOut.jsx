@@ -1,6 +1,6 @@
 import {useNavigate} from "react-router-dom"
-import CheckoutLeft from "../components/CheckoutLeft";
-import CheckoutRight from "../components/CheckoutRight";
+import CheckoutLeft from "../components/Checkout/CheckoutLeft";
+import CheckoutRight from "../components/Checkout/CheckoutRight";
 
 const CheckOut = () => {
 

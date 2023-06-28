@@ -1,8 +1,8 @@
 import {MdDelete} from "react-icons/md"
-import currencyFormatter from "../utils/currencyFormatter"
+import currencyFormatter from "../../utils/currencyFormatter"
 import { useDispatch } from "react-redux"
-import { removeItemFromCart } from "../slices/cartSlice"
-import { VITE_API_URL } from "../config"
+import { removeItemFromCart } from "../../slices/cartSlice"
+import { VITE_API_URL } from "../../config"
 import { useNavigate } from "react-router-dom"
 
 const CartProduct = ({product}) => {

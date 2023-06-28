@@ -1,5 +1,5 @@
-import Carousel from "../components/Carousel";
-import CollectionBox from "../components/CollectionBox";
+import Carousel from "../components/Common/Carousel";
+import CollectionBox from "../components/Common/CollectionBox";
 import tshirtImage from "../assets/tshirts.jpg";
 import hoodiesImage from "../assets/hoodies.jpg";
 import capsImage from "../assets/caps.jpg";

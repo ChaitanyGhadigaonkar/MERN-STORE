@@ -47,7 +47,7 @@ const Login = () => {
     login();
   };
   useEffect(()=>{
-    if(localStorage.getItem("userInfo")!==null){
+    if(localStorage.getItem("userInfo") === null){
       navigate("/tshirts")
     }
   })

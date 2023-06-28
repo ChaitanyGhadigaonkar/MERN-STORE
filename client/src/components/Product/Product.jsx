@@ -1,5 +1,5 @@
 import React from 'react'
-import currencyFormatter from '../utils/currencyFormatter'
+import currencyFormatter from '../../utils/currencyFormatter'
 import {useNavigate} from "react-router-dom"
 
 const Product = ({product}) => {

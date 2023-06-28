@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
+import Navbar from './components/Common/Navbar';
+import Footer from './components/Common/Footer';
 import Tshirts from "./pages/Tshirts"
 import Hoodies from "./pages/Hoodies"
 import Login from "./pages/Login"
@@ -13,9 +13,10 @@ import { useEffect } from 'react';
 import { fetchCarts, setInitialTotal } from './slices/cartSlice';
 import { fetchProducts} from './slices/productSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import Toast from './components/Toast';
+import Toast from './components/Common/Toast';
 import SearchProducts from './pages/SearchProducts';
 import Dashboard from './pages/Dashboard';
+import Shop from './pages/Shop';
 function App() {
 
   const dispatch = useDispatch()
@@ -33,6 +34,7 @@ function App() {
         <Toast/>
         <Routes>
           <Route path='/' element={<Home />} />
+          <Route path='/shop' element={<Shop />} />
           <Route path='/tshirts' element={<Tshirts/> } />
           <Route path='/hoodies' element={<Hoodies />} />
           <Route path='/caps' element={<Caps />} />

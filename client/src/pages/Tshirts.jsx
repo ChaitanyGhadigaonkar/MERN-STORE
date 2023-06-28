@@ -1,4 +1,4 @@
-import Product from "../components/product"
+import Product from "../components/Product/product"
 import {useSelector} from "react-redux"
 import { filterBasedOnCategory } from "../utils/filterBasedOnCategory"
 

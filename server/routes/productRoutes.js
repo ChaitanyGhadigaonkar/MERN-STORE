@@ -6,12 +6,15 @@ import updateProduct from "../controllers/product/updateProduct.js";
 import deleteProduct from "../controllers/product/deleteProduct.js";
 import searchProduct from "../controllers/product/searchProduct.js";
 import protect from "../middleware/authMiddleware.js";
+import pagination from "../controllers/product/pagination.js";
 
 
 const productRouter = express.Router();
 
 
 productRouter.get("/", getProducts);
+
+productRouter.get("/products", pagination);
 
 productRouter.get("/:slug", getProduct);
 

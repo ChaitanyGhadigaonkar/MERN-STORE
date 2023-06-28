@@ -1,11 +1,11 @@
 import { RxCross2 } from "react-icons/rx";
-import CartProduct from "./CartProduct";
-import currencyFormatter from "../utils/currencyFormatter";
+import CartProduct from "../Cart/CartProduct";
+import currencyFormatter from "../../utils/currencyFormatter";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux"
-import { clearCart, fetchCarts } from "../slices/cartSlice";
+import { clearCart, fetchCarts } from "../../slices/cartSlice";
 import { toast } from "react-hot-toast";
-import { VITE_API_URL } from "../config";
+import { VITE_API_URL } from "../../config";
 
 
 const Cart = ({setCartVisibility}) => {

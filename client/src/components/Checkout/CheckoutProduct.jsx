@@ -1,4 +1,4 @@
-import currencyFormatter from "../utils/currencyFormatter"
+import currencyFormatter from "../../utils/currencyFormatter"
 
 const product ={
     name:"Code Mode On Hoodie",
