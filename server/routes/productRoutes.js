@@ -7,6 +7,7 @@ import deleteProduct from "../controllers/product/deleteProduct.js";
 import searchProduct from "../controllers/product/searchProduct.js";
 import protect from "../middleware/authMiddleware.js";
 import pagination from "../controllers/product/pagination.js";
+import singleUpload from "../middleware/multer.js";
 
 
 const productRouter = express.Router();
@@ -22,7 +23,7 @@ productRouter.get("/search/:name", searchProduct)
 
 
 // protected routes
-productRouter.post("/", createProduct);
+productRouter.post("/", singleUpload, createProduct);
 productRouter
   .put("/:slug", protect, updateProduct)
   .delete("/:slug", protect, deleteProduct);

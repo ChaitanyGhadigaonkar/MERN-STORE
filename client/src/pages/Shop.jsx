@@ -1,6 +1,7 @@
 
 import PrevNext from "../components/Common/PrevNext";
 import Product from "../components/Product/Product"
+import { LIMIT } from "../config";
 import FetchRequest from "../utils/fetch";
 import { useEffect, useState } from "react";
 
@@ -8,10 +9,13 @@ import { useEffect, useState } from "react";
 const Shop = () => {
   const [products, setProducts] = useState()
   const [pageNo, setPageNo] = useState(1)
-
-  const limit = 5;
+  const [hasNext, setHasNext] = useState(true)
+  const [hasPrev, setHasPrev] = useState(true)
+  const limit = LIMIT;
     const getData = async()=>{
-        const {products} = await FetchRequest(`product/products?page=${pageNo}&limit=${limit}`, "GET", null)
+        const {products,previous,next} = await FetchRequest(`product/products?page=${pageNo}&limit=${limit}`, "GET", null)
+        setHasPrev(previous !== null)
+        setHasNext(next !== null)
         setProducts(products)
     }
     useEffect(()=>{
@@ -24,7 +28,7 @@ const Shop = () => {
         return <Product key={product._id} product={product} />
       })}
       </div>
-      <PrevNext pageNo={pageNo} setPageNo={setPageNo}/>
+      <PrevNext pageNo={pageNo} setPageNo={setPageNo} hasNext={hasNext} hasPrev={hasPrev}/>
     </div>
   )
 }
