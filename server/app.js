@@ -8,16 +8,16 @@ import cookieParser from 'cookie-parser';
 import cors from  "cors";
 import cartRouter from './routes/cartRoutes.js';
 import cloudinary from "cloudinary"
+import addressRouter from './routes/addressRoutes.js';
 
 connectDB();
 
 const app = express();
 
-// cloudinary config
-cloudinary.v2.config({ 
-  cloud_name: CLOUDINARY_CLOUD_NAME, 
-  api_key: CLOUDINARY_API_KEY, 
-  api_secret: CLOUDINARY_API_SECRETE 
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRETE,
 });
 
 const corsOptions ={
@@ -28,10 +28,12 @@ app.use(cors(corsOptions))
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
 // routes
 app.use('/api/auth', userRouter);
 app.use('/api/product', productRouter);
 app.use('/api/cart', cartRouter);
+app.use('/api/address', addressRouter);
 
 // error handler
 app.use(errorHandler);
