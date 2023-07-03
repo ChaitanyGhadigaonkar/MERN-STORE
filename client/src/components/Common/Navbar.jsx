@@ -8,7 +8,7 @@ import {MdLogout} from "react-icons/md"
 import {useDispatch, useSelector} from "react-redux"
 import logout from '../../utils/logout'
 import { toast } from 'react-hot-toast'
-import { setUserCredentials } from '../../slices/userSlice'
+import { removeUserCredential } from '../../slices/userSlice'
 
 const Navbar = () => {
   const [show,setShow] = useState(false)
@@ -34,7 +34,7 @@ const Navbar = () => {
     const success = await logout();
     if(success){
       toast.success("Logout successfully")
-      dispatch(setUserCredentials(null))
+      dispatch(removeUserCredential())
     }else{
       toast.error("Something went's wrong")
     }
@@ -69,7 +69,7 @@ const Navbar = () => {
           <Link to={"/hoodies"} className='text-base font-semibold font-playfair' onClick={()=>{setShow(false)}} >Hoodies</Link>
           <Link to={"/caps"} className='text-base font-semibold font-playfair' onClick={()=>{setShow(false)}} >Caps</Link>
           
-            {userInfo !== null ?
+            {userInfo ?
               <div className='flex items-center'>
                 <Link to={"/dashboard/account"} className='text-base px-2 font-semibold font-playfair' onClick={()=>{setShow(false)}} >Dashboard</Link>
                 <Link to={"/"} className='flex items-center gap-2 text-base px-2 font-semibold font-playfair' onClick={handleLogout} >Logout <MdLogout/></Link>

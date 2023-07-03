@@ -17,6 +17,7 @@ import Toast from './components/Common/Toast';
 import SearchProducts from './pages/SearchProducts';
 import Dashboard from './pages/Dashboard';
 import Shop from './pages/Shop';
+import ForgotPassword from './pages/ForgotPassword';
 function App() {
 
   const dispatch = useDispatch()
@@ -42,6 +43,7 @@ function App() {
           <Route path='/checkout' element={<CheckOut />} />
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<SignUp />} />
+          <Route path='/forgot-password' element={<ForgotPassword />} />
           <Route path='/products' element={<SearchProducts />} />
           <Route path='/dashboard/:field' element={<Dashboard />} />
         </Routes>

@@ -46,10 +46,11 @@ const signUp =async()=>{
       signUp()
   }
   useEffect(()=>{
-    if(localStorage.getItem("userInfo")===null){
-      navigate("/tshirts")
+    console.log(localStorage.getItem("userInfo"))
+    if(localStorage.getItem("userInfo")){
+      navigate("/")
     }
-  })
+  },[])
   return (
     <div className="flex flex-1 flex-col items-center justify-center gap-2 px-2 ">
       <h1 className="text-xl font-semibold my-2">Sign Up</h1>

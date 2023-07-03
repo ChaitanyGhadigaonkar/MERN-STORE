@@ -15,20 +15,20 @@ const createProduct = expressAsyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("slug must be unique");
   }
-  const multerFile = req.file;
-  const fileUri = getDataUri(multerFile);
-  const cloud = await cloudinary.v2.uploader.upload(fileUri.content)
-  
-  product = await Product.create({
-    name,
-    slug,
-    image:cloud.secure_url,
-    description,
-    category,
-    quantity,
-    price,
-  });
-  res.status(201).json({ success: true, product });
+  const multerFile = req.files;
+  console.log(multerFile)
+  // const fileUri = getDataUri(multerFile);
+  // const cloud = await cloudinary.v2.uploader.upload(fileUri.content)
+  // product = await Product.create({
+  //   name,
+  //   slug,
+  //   imageUrl:cloud.secure_url,
+  //   description,
+  //   category,
+  //   quantity,
+  //   price,
+  // });
+  res.status(201).json({ success: true});
 });
 
 export default createProduct;

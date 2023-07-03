@@ -47,10 +47,10 @@ const Login = () => {
     login();
   };
   useEffect(()=>{
-    if(localStorage.getItem("userInfo") === null){
-      navigate("/tshirts")
+    if(localStorage.getItem("userInfo")){
+      navigate("/")
     }
-  })
+  },[])
   return (
     <div className="flex flex-1 flex-col items-center justify-center gap-2 px-2">
       <h1 className="text-xl font-semibold my-2">Login Here</h1>
@@ -82,6 +82,7 @@ const Login = () => {
           />
         </div>
         <div className="">
+          <p className="text-pink-400 font-semibold  text-sm my-2 text-right hover:text-pink-600 cursor-pointer" onClick={() => navigate("/forgot-password")} >Forgot password ?</p>
           <p
             className="text-pink-400 font-semibold  text-sm my-2 text-right hover:text-pink-600 cursor-pointer"
             onClick={() => navigate("/signup")}
