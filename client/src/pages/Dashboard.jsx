@@ -18,11 +18,11 @@ const Dashboard = () => {
         }
     },[])
   return (
-    <div className="flex flex-1 flex-col items-center justify-evenly gap-2 my-5 px-5 ">
-        <div className="w-full">
-        <h1 className="text-xl">Welcome<span className="font-semibold "> {userInfo.name}</span></h1>
+    <div className="flex flex-1 flex-col gap-2 my-5 px-5 ">
+        <div className="">
+        <h1 className="text-xl mt-10">Welcome<span className="font-semibold "> {userInfo.name}</span></h1>
         </div>
-        <div className="flex-1 flex items-center justify-center gap-10">
+        <div className="flex-1 flex flex-col md:flex-row items-center gap-4">
         <LeftDashboard/>
         {field === "account" && <AccountDetails/>}
         {field === "address" && <Address/>}

@@ -9,7 +9,7 @@ import SignUp from "./pages/SignUp"
 import Product from './pages/product';
 import Caps from './pages/Caps';
 import CheckOut from './pages/CheckOut';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { fetchCarts, setInitialTotal } from './slices/cartSlice';
 import { fetchProducts} from './slices/productSlice';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,9 +18,12 @@ import SearchProducts from './pages/SearchProducts';
 import Dashboard from './pages/Dashboard';
 import Shop from './pages/Shop';
 import ForgotPassword from './pages/ForgotPassword';
+import {FaFilter} from "react-icons/fa"
+
 function App() {
 
   const dispatch = useDispatch()
+  const [showFilter, setShowFilter] = useState(false)
   const {cart} = useSelector(state=>state.cart)
   const {userInfo} = useSelector(state=>state.user)
   useEffect(()=>{
@@ -33,9 +36,10 @@ function App() {
       <BrowserRouter>
         <Navbar/>
         <Toast/>
+        <div className="absolute top-28 md:top-20 right-8 cursor-pointer" onClick={()=>setShowFilter(prev=>!prev)}><FaFilter className='text-2xl text-pink-500'/></div>
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/shop' element={<Shop />} />
+          <Route path='/shop' element={<Shop showFilter={showFilter} setShowFilter={setShowFilter}/>} />
           <Route path='/tshirts' element={<Tshirts/> } />
           <Route path='/hoodies' element={<Hoodies />} />
           <Route path='/caps' element={<Caps />} />

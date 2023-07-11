@@ -43,17 +43,17 @@ const Navbar = () => {
   
   return (
     <>
-    <div className={`cart fixed top-0 right-0 z-50 transition-transform duration-300 ${!cartVisibility?"translate-x-[1000px]": "translate-x-0"}`} id='cart-div'>
+    <div className={`cart fixed top-0 right-0 z-50 transition-transform duration-300 text-sm ${!cartVisibility?"translate-x-[1000px]": "translate-x-0"}`} id='cart-div'>
       <Cart setCartVisibility={setCartVisibility}/>
       </div>
     <div className='flex flex-col items-center overflow-x-hidden md:flex-row md:justify-between'>
-      <div className="logo w-[100%] flex flex-col items-center py-3 px-3 self-center gap-8  justify-center md:flex-row md:w-auto md:flex-1 md:justify-between md:m-0">
+      <div className="logo w-[100%] flex flex-col items-center py-3 px-3 self-center gap-2 lg:gap-8  justify-center md:flex-row md:w-auto md:flex-1 md:justify-between md:m-0">
           <Link className='text-black-100 font-semibold self-start md:self-baseline text-xl cursor-pointer md:mx-2' to={'/'} >MERN STORE
           </Link>
           
           <form className="search flex items-center gap-1">
-            <input type="text" name="search" className='text-base w-64 px-2 py-1 border-theme border-[2px] rounded-md outline-0 md:w-72' value={searchQuery} onChange={handleSearchChange}/>
-            <button className='border-none rounded-lg px-3 py-3 text-base bg-pink-500 hover:bg-pink-600 ' onClick={handleSearch} ><BsSearch className='text-base w-3 h-3 relative'/>
+            <input type="text" name="search" className='text-sm lg:text-base  w-64 px-2 py-1 border-theme border-[2px] rounded-md outline-0 md:w-56' value={searchQuery} onChange={handleSearchChange}/>
+            <button className='border-none rounded-lg px-3 py-3 text-sm lg:text-base  bg-pink-500 hover:bg-pink-600 ' onClick={handleSearch} ><BsSearch className='text-sm lg:text-base  w-3 h-3 relative'/>
             </button>
           </form>
           <div className="cart cursor-pointer absolute right-14 top-3 md:block md:top-auto md:right-auto md:relative">
@@ -64,19 +64,19 @@ const Navbar = () => {
           </div>
       </div>
       <div className={`right flex gap-2 relative items-center justify-end py-2 transition-transform duration-300 ${show ? "translate-x-0 flex-col md:flex-row": "translate-x-[1000px] flex-row"} md:translate-x-0 lg:flex-row md:gap-6 md:px-4 md:flex-1`} >
-          <Link to={"/shop"} className='text-base font-semibold font-playfair' onClick={()=>{setShow(false)}} >Shop</Link>
-          <Link to={"/tshirts"} className='text-base font-semibold font-playfair' onClick={()=>{setShow(false)}} >T shirts</Link>
-          <Link to={"/hoodies"} className='text-base font-semibold font-playfair' onClick={()=>{setShow(false)}} >Hoodies</Link>
-          <Link to={"/caps"} className='text-base font-semibold font-playfair' onClick={()=>{setShow(false)}} >Caps</Link>
+          <Link to={"/shop"} className='text-sm lg:text-base  font-semibold font-playfair' onClick={()=>{setShow(false)}} >Shop</Link>
+          <Link to={"/tshirts"} className='text-sm lg:text-base  font-semibold font-playfair' onClick={()=>{setShow(false)}} >T shirts</Link>
+          <Link to={"/hoodies"} className='text-sm lg:text-base  font-semibold font-playfair' onClick={()=>{setShow(false)}} >Hoodies</Link>
+          <Link to={"/caps"} className='text-sm lg:text-base  font-semibold font-playfair' onClick={()=>{setShow(false)}} >Caps</Link>
           
-            {userInfo ?
-              <div className='flex items-center'>
-                <Link to={"/dashboard/account"} className='text-base px-2 font-semibold font-playfair' onClick={()=>{setShow(false)}} >Dashboard</Link>
-                <Link to={"/"} className='flex items-center gap-2 text-base px-2 font-semibold font-playfair' onClick={handleLogout} >Logout <MdLogout/></Link>
+            {localStorage.getItem("userInfo") ?
+              <div className='flex flex-col gap-2 md:flex-row items-center'>
+                <Link to={"/dashboard/account"} className='text-sm lg:text-base  px-2 font-semibold font-playfair' onClick={()=>{setShow(false)}} >Dashboard</Link>
+                <Link to={"/"} className='flex items-center gap-2 text-sm lg:text-base  px-2 font-semibold font-playfair' onClick={handleLogout} >Logout <MdLogout/></Link>
                 </div> : 
                 <>
-                  <Link to={"/login"} className='text-base font-semibold font-playfair' onClick={()=>{setShow(false)}} >Login</Link>
-                  <Link to={"/signup"} className='text-base font-semibold font-playfair' onClick={()=>{setShow(false)}} >Sign Up</Link>
+                  <Link to={"/login"} className='text-sm lg:text-base  font-semibold font-playfair' onClick={()=>{setShow(false)}} >Login</Link>
+                  <Link to={"/signup"} className='text-sm lg:text-base  font-semibold font-playfair' onClick={()=>{setShow(false)}} >Sign Up</Link>
                 </>
             }
       </div>
@@ -91,7 +91,7 @@ const Navbar = () => {
 }
 
 /*
-    {/* <Link to={"/login"} className='flex items-center gap-1 text-base font-semibold font-playfair' onClick={()=>{setShow(false)}} >
+    {/* <Link to={"/login"} className='flex items-center gap-1 text-sm lg:text-base  font-semibold font-playfair' onClick={()=>{setShow(false)}} >
                   {userInfo.name.split(" ")[0]}
                   <AiOutlineDown className='text-[12px] object-contain' onClick={()=>{}}/>
     </Link>  

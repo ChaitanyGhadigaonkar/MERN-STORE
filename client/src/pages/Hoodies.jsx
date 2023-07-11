@@ -1,4 +1,5 @@
 import Product from "../components/Product/product"
+import ProductLoader from "../components/Loading/Product"
 import { useEffect, useState} from "react"
 import { LIMIT } from "../config"
 import FetchRequest from "../utils/fetch"
@@ -6,7 +7,7 @@ import PrevNext from "../components/Common/PrevNext"
 
 
 const Hoodies = () => {
-
+  const [loading, setLoading] = useState(true)
   const [products, setProducts] = useState()
   const [pageNo, setPageNo] = useState(1)
   const [hasNext, setHasNext] = useState(true)
@@ -14,7 +15,9 @@ const Hoodies = () => {
   const limit = LIMIT;
 
   const getData = async()=>{
+    setLoading(true)
     const {products,previous,next} = await FetchRequest(`product/products?page=${pageNo}&limit=${limit}&category=hoodie`, "GET", null)
+    setLoading(false)
     setHasPrev(previous !== null)
     setHasNext(next !== null)
     setProducts(products)
@@ -30,9 +33,19 @@ const Hoodies = () => {
 
         <div className="hoodies-container my-5 grid grid-cols-1 place-content-center gap-x-5 gap-y-10 md:grid-cols-2 md:gap-x-10 md:my-10 lg:grid-cols-3">
           {
-              products &&  products.map(product =>{
+              !loading  ?  products.map(product =>{
                 return <Product key={product._id} product={product}/>
               })
+              : 
+              <>
+              <ProductLoader/>
+              <ProductLoader/>
+              <ProductLoader/>
+              <ProductLoader/>
+              <ProductLoader/>
+              <ProductLoader/>
+              </>
+              
             }
         </div>
 
