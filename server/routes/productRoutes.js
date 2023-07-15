@@ -14,7 +14,7 @@ const productRouter = express.Router();
 
 productRouter.get("/", getProducts);
 
-productRouter.get("/products", pagination);
+productRouter.get("/products", pagination); //change it to pagination
 
 productRouter.get("/:slug", getProduct);
 
@@ -22,7 +22,7 @@ productRouter.get("/search/:name", searchProduct)
 
 
 // protected routes
-productRouter.post("/", singleUpload, createProduct);
+productRouter.post("/", createProduct);
 productRouter
   .put("/:slug", protect, updateProduct)
   .delete("/:slug", protect, deleteProduct);

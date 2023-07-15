@@ -6,7 +6,7 @@ const LeftDashboard = () => {
     const {field} = useParams()
 
   return (
-    <div className="flex  flex-col items-center justify-center w-64 my-5">
+    <div className="flex flex-col items-center justify-center w-64 my-5">
         <div className="border-[1px] text-center py-2 w-full bg-slate-200">
             <h1 className="text-base font-semibold ">Account</h1>
         </div>

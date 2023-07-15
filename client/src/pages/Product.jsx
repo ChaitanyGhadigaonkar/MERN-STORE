@@ -14,6 +14,7 @@ import ProductDescription from "../components/Product/ProductDescription";
 import FetchRequest from "../utils/fetch";
 
 
+const sizes = ['S', 'M', 'L', 'XL', 'XXL'] 
 
 const Product = () => {
   const [loading, setLoading] = useState(true)
@@ -56,16 +57,29 @@ const Product = () => {
     }
   }
   const handleAddToCart =()=>{
-    addFunction()
+    addFunction() 
+    // add size in the backend and also in frontend inside the cart section product will have name, title, size, price, quantity 🆗
+    // search for better solution for refreshing the site
     dispatch(addItemToCart(product))
     
   }
+
+  const handleOnSizeClick =(size)=>{
+    const arr = product.slug.split("-")
+    arr[arr.length - 1] = size.toLowerCase()
+    window.location.href = `/product/${arr.join("-")}`
+  }
+  
   useEffect(()=>{
     setLoading(true)
       const fetchProduct = async()=>{
         const {product} = await FetchRequest(`product/${slug}`, "GET", null)
-        setProduct(JSON.parse(JSON.stringify(product)))
-        setProductImage(product.imageUrl[0])
+        if(product){
+          setProduct(JSON.parse(JSON.stringify(product)))
+          setProductImage(product.imageUrl[0])
+        }else{
+
+        }
         setLoading(false)
       }
       fetchProduct()
@@ -73,7 +87,7 @@ const Product = () => {
 
   return (
     <>
-    {
+    { product ? 
       <>
       <div className="flex flex-col px-3 py-8 ">
         <div className="flex flex-col items-center ">
@@ -105,7 +119,7 @@ const Product = () => {
         <div className="lg:my-7">
           <div className="">
             <h4 className="text-base text-slate-600 font-semibold lg:text-lg">NIKE</h4>
-            <h1 className="text-xl font-semibold my-2 lg:text-3xl">{product.name}</h1>
+            <h1 className="text-xl font-semibold my-2 lg:text-3xl">{product.name} / ({product.size})</h1>
             <h4
               className="text-base font-semibold capitalize text-slate-500 lg:text-lg"
             >
@@ -120,7 +134,22 @@ const Product = () => {
             </h4>
             <p className="text-sm text-slate-600 lg:text-base">{product.description}</p>
 
-            <div className="">{/* color remaining */} {/* size remaining */}</div>
+            <div className="my-4 flex gap-3">
+              {/* color remaining */} {/* size remaining */}
+              <h3 className="text-lg font-bold ">Size: </h3>
+              <div className="flex items-center gap-2">
+                {
+                  sizes.map(size=>{
+                    return <div key={size} className={`border-[1px] border-slate-300 rounded-md px-2 py-1 cursor-pointer ${size === product.size ? "bg-pink-400" : ""}`} onClick={()=>handleOnSizeClick(size)}>
+                        <p className="text-base font-semibold items-center justify-center">{size}</p>
+                       </div> 
+                  })
+                }
+              </div>
+            
+            </div>
+            <hr className="border-[0.5px] border-slate-300 my-2"/>
+            
             <div
               className="price flex flex-col gap-2 my-2 md:flex-row md:justify-between md:my-5"
             >
@@ -137,7 +166,7 @@ const Product = () => {
                 </button>
                 <button
                   className="text-base font-semibold rounded-lg border-slate-400 outline-0 px-3 py-2 bg-pink-500 text-white hover:bg-pink-400 flex items-center gap-1 lg:text-lg"
-                  onClick="{handleAddToCart}"
+                  onClick={handleAddToCart}
                 >
                   <AiOutlineShoppingCart />
                   Add to cart
@@ -146,12 +175,12 @@ const Product = () => {
                   {favorite ? (
                   <MdFavorite
                     className="text-pink-500 w-6 h-6 cursor-pointer"
-                    onClick="{handleFavoriteClick}"
+                    onClick={handleFavoriteClick}
                   />
                   ) : (
                   <MdFavoriteBorder
                     className="text-pink-500 w-6 h-6 cursor-pointer"
-                    onClick="{handleFavoriteClick}"
+                    onClick={handleFavoriteClick}
                   />
                   )}
                 </div>
@@ -164,10 +193,9 @@ const Product = () => {
       }
       
     </div>
-      </>
+      </> : <h1 className="font-semibold text-2xl text-center">Sorry this particular size is not available </h1>
     }
     </>
-    
   );
 };
 

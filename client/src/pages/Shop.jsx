@@ -1,7 +1,7 @@
 
 import FilterComponent from "../components/Filters/FilterComponent";
 import PrevNext from "../components/Common/PrevNext";
-import Product from "../components/Product/Product"
+import Product from "../components/Product/product"
 import ProductLoader from "../components/Loading/Product"
 import { LIMIT } from "../config";
 import FetchRequest from "../utils/fetch";
@@ -43,8 +43,8 @@ const Shop = ({showFilter, setShowFilter}) => {
     <div className='flex flex-col items-center gap-5 px-3 my-5'>
       <div className="hoodies-container my-5 grid grid-cols-1 place-content-center gap-x-5 gap-y-10 md:grid-cols-2 md:gap-x-10 md:my-10 lg:grid-cols-3">
             {
-              !loading  ?  products.map(product =>{
-                return <Product key={product._id} product={product}/>
+              !loading  ?  Object.keys(products).map(product =>{
+                return <Product key={products[product]._id} product={products[product]}/>
               })
               : 
               <>
