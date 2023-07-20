@@ -55,7 +55,7 @@ function App() {
         <Toast/>
         <div className="absolute top-28 md:top-20 right-8 cursor-pointer" onClick={()=>setShowFilter(prev=>!prev)}><FaFilter className='text-2xl text-pink-500'/></div>
         <Routes>
-          <Route path='/' element={<Home />} />
+          <Route index path='/' element={<Home />} />
           <Route path='/shop' element={<Shop showFilter={showFilter} setShowFilter={setShowFilter}/>} />
           
           <Route path='/tshirts' element={<Collections key={collection.tshirt.category} head={collection.tshirt.head} paragraph={collection.tshirt.paragraph} category={collection.tshirt.category}/> }  />

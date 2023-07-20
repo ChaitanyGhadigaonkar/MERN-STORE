@@ -1,18 +1,26 @@
-import React from "react";
+import { useState } from "react";
 import currencyFormatter from "../../utils/currencyFormatter";
+import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
 const Product = ({ product }) => {
   const navigate = useNavigate();
+  const [favorite, setFavorite] = useState(false);
+
+
   const handleProductClick = () => {
     navigate(`/product/${product.slug}`);
   };
+  // wishlist 
+  const handleFavoriteClick = () => {
+    setFavorite((prev) => !prev);
+  };
+
   return (
     <div
-      className="w-64 flex flex-col items-center gap-2 rounded-md shadow-lg cursor-pointer"
-      onClick={handleProductClick}
+      className="w-64 flex flex-col items-center gap-2 rounded-md shadow-lg relative"
     >
-      <div className="top">
+      <div className="top cursor-pointer" onClick={handleProductClick} >
         <img src={product.imageUrl} alt="Hoodie image" srcSet="" />
       </div>
       <div className="bottom px-8 py-3 my-2">
@@ -36,6 +44,19 @@ const Product = ({ product }) => {
           })}
         </div>
       </div>
+      <div className="favorite absolute right-3 top-2">
+        {favorite ? (
+          <MdFavorite
+            className="text-pink-500 w-6 h-6 cursor-pointer"
+            onClick={handleFavoriteClick}
+          />
+          ) : (
+          <MdFavoriteBorder
+            className="text-pink-500 w-6 h-6 cursor-pointer"
+            onClick={handleFavoriteClick}
+          />
+          )}
+          </div>
     </div>
   );
 };

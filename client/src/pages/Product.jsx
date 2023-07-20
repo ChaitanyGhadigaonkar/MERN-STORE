@@ -12,16 +12,15 @@ import addProductToTheCart from "../../../server/controllers/cart/addProductToTh
 import ProductsMoreImages from "../components/Loading/ProductsMoreImages";
 import ProductDescription from "../components/Product/ProductDescription";
 import FetchRequest from "../utils/fetch";
+import { sizes } from "../config";
 
-
-const sizes = ['S', 'M', 'L', 'XL', 'XXL'] 
 
 const Product = () => {
   const [loading, setLoading] = useState(true)
   const [favorite, setFavorite] = useState(false);
   const [product, setProduct] = useState()
   const [productImage, setProductImage] = useState()
-
+  
 
   const dispatch = useDispatch()
   const {pathname} = useLocation()
@@ -87,7 +86,7 @@ const Product = () => {
 
   return (
     <>
-    { product ? 
+    { product && !loading ? 
       <>
       <div className="flex flex-col px-3 py-8 ">
         <div className="flex flex-col items-center ">
