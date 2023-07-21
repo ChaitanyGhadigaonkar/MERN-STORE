@@ -3,7 +3,7 @@ import Order from './Order'
 
 const Orders = () => {
   return (
-    <div className='flex flex-[3] w-full flex-col'>
+    <div className='flex w-full flex-[3] flex-col md:px-10'>
       <h1 className='text-xl font-semibold'>My Orders</h1>
       <Order/>
       <Order/>

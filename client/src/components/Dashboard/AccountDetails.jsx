@@ -29,7 +29,7 @@ const AccountDetails = () => {
     }
   }
   return (
-    <div className='flex w-full flex-[3] flex-col px-10'>
+    <div className='flex w-full flex-[3] flex-col md:px-10'>
         <h1 className='text-lg font-semibold my-2'>Account Details</h1>
         <hr className='border-[2px] border-slate-400'/>
         <form className='flex w-full justify-center items-center flex-col gap-3 my-3 mx-2 '>

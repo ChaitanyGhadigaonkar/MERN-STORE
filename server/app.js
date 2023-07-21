@@ -29,7 +29,7 @@ cloudinary.config({
 });
 
 const corsOptions = {
-  origin: ["http://localhost:3000", "*"],
+  origin: true,
   credentials: true, //access-control-allow-credentials:true
 };
 app.use(cors(corsOptions));

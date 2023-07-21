@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Hind&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -12,9 +12,14 @@
     flex-direction: column;
     justify-content: space-between;
     overflow-x: hidden;
+    font-family: 'Hind', sans-serif;
 }
 
 /*cart scrollbar */
 #cart-div ::-webkit-scrollbar {
+    display: none;
+}
+
+#wishlist-container::-webkit-scrollbar {
     display: none;
 }

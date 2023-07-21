@@ -1,26 +1,55 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import currencyFormatter from "../../utils/currencyFormatter";
 import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addItem,
+  removeItem,
+} from "../../slices/wishlistSlice";
 
 const Product = ({ product }) => {
   const navigate = useNavigate();
-  const [favorite, setFavorite] = useState(false);
+  const dispatch = useDispatch();
+  const { wishlist } = useSelector((state) => state.wishlist);
 
+  const [favorite, setFavorite] = useState(false);
 
   const handleProductClick = () => {
     navigate(`/product/${product.slug}`);
   };
-  // wishlist 
-  const handleFavoriteClick = () => {
+  // wishlist
+
+  const handleRemoveFromWishlist = () => {
+    let wishlistId;
+    
+    wishlist.forEach((item)=>{
+      if(item.product.name === product.name){
+        wishlistId =  item._id;
+      }
+    })
+
+    dispatch(removeItem(wishlistId))
+    setFavorite((prev) => !prev);
+  };
+  const handleAddToWishlist = () => {
+    dispatch(addItem(product))
     setFavorite((prev) => !prev);
   };
 
+
+  useEffect(()=>{
+      wishlist.forEach(item=>{
+        if(item.product.name === product.name){
+          setFavorite(true)
+        }
+      })
+  },[])
+
+
   return (
-    <div
-      className="w-64 flex flex-col items-center gap-2 rounded-md shadow-lg relative"
-    >
-      <div className="top cursor-pointer" onClick={handleProductClick} >
+    <div className="w-64 flex flex-col items-center gap-2 rounded-md shadow-lg relative">
+      <div className="top cursor-pointer" onClick={handleProductClick}>
         <img src={product.imageUrl} alt="Hoodie image" srcSet="" />
       </div>
       <div className="bottom px-8 py-3 my-2">
@@ -48,15 +77,15 @@ const Product = ({ product }) => {
         {favorite ? (
           <MdFavorite
             className="text-pink-500 w-6 h-6 cursor-pointer"
-            onClick={handleFavoriteClick}
+            onClick={handleRemoveFromWishlist}
           />
-          ) : (
+        ) : (
           <MdFavoriteBorder
             className="text-pink-500 w-6 h-6 cursor-pointer"
-            onClick={handleFavoriteClick}
+            onClick={handleAddToWishlist}
           />
-          )}
-          </div>
+        )}
+      </div>
     </div>
   );
 };
