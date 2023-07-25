@@ -18,6 +18,7 @@ import ForgotPassword from './pages/ForgotPassword';
 import {FaFilter} from "react-icons/fa"
 import Collections from './pages/Collections';
 import { fetchWishlistItems } from './slices/wishlistSlice';
+import { fetchAddress } from './slices/addressSlice';
 
 const collection = {
   tshirt :{
@@ -48,6 +49,7 @@ function App() {
     // dispatch(fetchProducts())
     dispatch(fetchCarts())
     dispatch(fetchWishlistItems())
+    dispatch(fetchAddress())
   },[userInfo])
 
   return (

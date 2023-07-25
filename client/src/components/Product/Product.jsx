@@ -46,7 +46,6 @@ const Product = ({ product }) => {
       })
   },[])
 
-
   return (
     <div className="w-64 flex flex-col items-center gap-2 rounded-md shadow-lg relative">
       <div className="top cursor-pointer" onClick={handleProductClick}>

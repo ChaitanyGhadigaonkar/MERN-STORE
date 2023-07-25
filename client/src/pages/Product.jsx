@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import currencyFormatter from "../utils/currencyFormatter";
 import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
 import { AiOutlineShoppingCart } from "react-icons/ai";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addItemToCart } from "../slices/cartSlice";
 import {toast} from "react-hot-toast"
 import { useLocation} from "react-router-dom"
@@ -13,6 +13,7 @@ import ProductsMoreImages from "../components/Loading/ProductsMoreImages";
 import ProductDescription from "../components/Product/ProductDescription";
 import FetchRequest from "../utils/fetch";
 import { sizes } from "../config";
+import { addItem, removeItem } from "../slices/wishlistSlice";
 
 
 const Product = () => {
@@ -21,15 +22,13 @@ const Product = () => {
   const [product, setProduct] = useState()
   const [productImage, setProductImage] = useState()
   
-
   const dispatch = useDispatch()
   const {pathname} = useLocation()
+  
+  const { wishlist } = useSelector((state) => state.wishlist); 
 
   const slug = pathname.split("/")[2]
 
-  const handleFavoriteClick = () => {
-    setFavorite((prev) => !prev);
-  };
 
   const addFunction = async()=>{
     try {
@@ -63,6 +62,23 @@ const Product = () => {
     
   }
 
+  const handleRemoveFromWishlist = () => {
+    let wishlistId;
+    
+    wishlist.forEach((item)=>{
+      if(item.product.name === product.name){
+        wishlistId =  item._id;
+      }
+    })
+
+    dispatch(removeItem(wishlistId))
+    setFavorite((prev) => !prev);
+  };
+  const handleAddToWishlist = () => {
+    dispatch(addItem(product))
+    setFavorite((prev) => !prev);
+  };
+
   const handleOnSizeClick =(size)=>{
     const arr = product.slug.split("-")
     arr[arr.length - 1] = size.toLowerCase()
@@ -84,6 +100,13 @@ const Product = () => {
       fetchProduct()
   },[])
 
+  useEffect(()=>{
+    wishlist.forEach(item=>{
+      if(item.product.name === product?.name){
+        setFavorite(true)
+      }
+    })
+  },[product])
   return (
     <>
     { product && !loading ? 
@@ -171,17 +194,17 @@ const Product = () => {
                   Add to cart
                 </button>
                 <div className="favorite">
-                  {favorite ? (
+                {favorite ? (
                   <MdFavorite
-                    className="text-pink-500 w-6 h-6 cursor-pointer"
-                    onClick={handleFavoriteClick}
+                  className="text-pink-500 w-6 h-6 cursor-pointer"
+                  onClick={handleRemoveFromWishlist}
                   />
-                  ) : (
-                  <MdFavoriteBorder
-                    className="text-pink-500 w-6 h-6 cursor-pointer"
-                    onClick={handleFavoriteClick}
-                  />
-                  )}
+                ) : (
+                <MdFavoriteBorder
+                className="text-pink-500 w-6 h-6 cursor-pointer"
+                onClick={handleAddToWishlist}
+                />
+                )}
                 </div>
               </div>
             </div>

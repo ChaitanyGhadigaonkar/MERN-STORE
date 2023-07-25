@@ -22,7 +22,7 @@ const Dashboard = () => {
         <div className="">
         <h1 className="text-xl mt-10">Welcome<span className="font-semibold "> {userInfo.name}</span></h1>
         </div>
-        <div className="flex-1 flex flex-col md:flex-row items-center gap-4">
+        <div className="flex-1 min-h-[700px] flex flex-col md:flex-row items-center gap-4">
         <LeftDashboard/>
         {field === "account" && <AccountDetails/>}
         {field === "address" && <Address/>}
