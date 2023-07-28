@@ -5,11 +5,11 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon app.js",
-    "prod": "node app.js"
+    "dev": "nodemon index.js",
+    "start": "node index.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Chaitany Ghadigaonkar",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
