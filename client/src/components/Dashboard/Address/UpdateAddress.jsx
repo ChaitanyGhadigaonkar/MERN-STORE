@@ -1,23 +1,30 @@
-import {useState} from "react";
+import React, { useState } from 'react'
+import {FaTrash} from "react-icons/fa"
 import {useDispatch} from "react-redux"
-import { addAddress } from '../../slices/addressSlice'
+import { removeAddress, updateAddress } from '../../../slices/addressSlice'
 
 
-const AddAddressForm = () => {
-
-  const [formData, setFormData] = useState({address: "", city: "", state:"", pinCode: "", country:""})
+const UpdateAddress = ({updateFormData,setIsAddForm}) => {
+  const [formData, setFormData] = useState({address: updateFormData.address, city: updateFormData.city, state:updateFormData.state, pinCode: updateFormData.pinCode, country:updateFormData.country})
 
   const dispatch = useDispatch()
+
   const handleOnChange = (e)=>{
     setFormData({...formData, [e.target.name] : e.target.value })
   }
 
-  const handleOnAddAddress =(e)=>{
+  const handleOnUpdateAddress =(e)=>{
     e.preventDefault()
-    dispatch(addAddress({address : formData.address, city : formData.city, state : formData.state, pinCode : parseInt(formData.pinCode), country : formData.country}))
-    setFormData({address:"",city: "", state:"", pinCode: "", country:""})
+    dispatch(updateAddress({addressId:updateFormData._id, formData}))
+    
   }
 
+  const handleOnDeleteAddress =(e)=>{
+    e.preventDefault()
+    dispatch(removeAddress(updateFormData._id))
+    setFormData({address:"",city: "", state:"", pinCode: "", country:""})
+    setIsAddForm(true)
+  }
   return (
     <form className="flex w-full justify-center items-center flex-col gap-3 mx-2 ">
     <div className="flex w-full flex-col gap-2 md:w-3/4">
@@ -71,15 +78,24 @@ const AddAddressForm = () => {
           className="outline-0 border-[3px] border-slate-300 px-3 py-1 rounded-md text-base"
           placeholder="pinCode" value={formData.pinCode} onChange={handleOnChange}/>
       </div>
+      <div className='flex w-full justify-between'> 
       <button
-        className="text-base font-medium rounded-lg border-slate-40w-800  outline-0 px-3 py-2 bg-pink-500 text-white hover:bg-pink-400 flex items-center gap-1 lg:text-lg mx-auto my-2"
-        onClick={handleOnAddAddress}
+        className="text-base font-medium rounded-lg border-slate-800  outline-0 px-3 py-2 bg-pink-500 text-white hover:bg-pink-400 flex items-center gap-1 lg:text-lg my-2"
+        onClick={handleOnUpdateAddress}
       >
-        Add Address
+        Save Changes
       </button>
+      <button
+        className="text-base font-medium rounded-lg border-[1px] border-red-500  outline-0 px-3 py-2 text-white flex items-center gap-1 lg:text-lgs my-2"
+        onClick={handleOnDeleteAddress}
+      >
+        <FaTrash className='text-red-500'/>
+      </button>
+      </div>
+      
     </div>
   </form>
-  );
-};
+  )
+}
 
-export default AddAddressForm;
+export default UpdateAddress

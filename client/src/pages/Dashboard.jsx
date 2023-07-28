@@ -3,9 +3,9 @@ import { useSelector } from "react-redux"
 import { useNavigate, useParams } from "react-router-dom"
 import LeftDashboard from "../components/Dashboard/LeftDashboard"
 import AccountDetails from "../components/Dashboard/AccountDetails"
-import Address from "../components/Dashboard/Address"
-import Orders from "../components/Dashboard/Orders"
-import WishList from "../components/Dashboard/WishList"
+import Address from "../components/Dashboard/Address/Address"
+import Orders from "../components/Dashboard/Orders/Orders"
+import WishList from "../components/Dashboard/Wishlist/WishList"
 
 const Dashboard = () => {
     const {userInfo} = useSelector(state=>state.user)

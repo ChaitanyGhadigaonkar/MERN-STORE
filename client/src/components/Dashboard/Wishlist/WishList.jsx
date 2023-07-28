@@ -1,6 +1,6 @@
 
 import { useSelector } from 'react-redux'
-import Product from '../Product/product'
+import Product from '../../Product/product'
 
 
 const WishList = () => {

@@ -1,4 +1,4 @@
-import currencyFormatter from "../../utils/currencyFormatter"
+import currencyFormatter from "../../../utils/currencyFormatter"
 
 const order = {
   _id: "64b56f8d928db5d2f813fe5c",

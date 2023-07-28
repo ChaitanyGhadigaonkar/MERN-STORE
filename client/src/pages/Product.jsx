@@ -5,7 +5,7 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { addItemToCart } from "../slices/cartSlice";
 import {toast} from "react-hot-toast"
-import { useLocation} from "react-router-dom"
+import { Navigate, useLocation, useNavigate} from "react-router-dom"
 import { VITE_API_URL } from "../config";
 import ProductsMoreImage from "../components/Product/ProductsMoreImage";
 import addProductToTheCart from "../../../server/controllers/cart/addProductToTheCart";
