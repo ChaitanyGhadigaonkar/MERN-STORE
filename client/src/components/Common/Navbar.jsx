@@ -111,7 +111,7 @@ const Navbar = () => {
           <Link to={"/hoodies"} className='text-sm lg:text-base  font-semibold font-playfair' onClick={()=>{setShow(false)}} >Hoodies</Link>
           <Link to={"/caps"} className='text-sm lg:text-base  font-semibold font-playfair' onClick={()=>{setShow(false)}} >Caps</Link>
           
-            {localStorage.getItem("userInfo") ?
+            {userInfo ?
               <div className='flex flex-col gap-2 md:flex-row items-center'>
                 <Link to={"/dashboard/account"} className='text-sm lg:text-base  px-2 font-semibold font-playfair' onClick={()=>{setShow(false)}} >Dashboard</Link>
                 <Link to={"/"} className='flex items-center gap-2 text-sm lg:text-base  px-2 font-semibold font-playfair' onClick={handleLogout} >Logout <MdLogout/></Link>

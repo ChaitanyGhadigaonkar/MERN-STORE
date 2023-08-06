@@ -23,3 +23,7 @@
 #wishlist-container::-webkit-scrollbar {
     display: none;
 }
+
+#admin-products-container::-webkit-scrollbar {
+    display: none;
+}

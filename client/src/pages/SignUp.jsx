@@ -46,7 +46,6 @@ const signUp =async()=>{
       signUp()
   }
   useEffect(()=>{
-    console.log(localStorage.getItem("userInfo"))
     if(localStorage.getItem("userInfo")){
       navigate("/")
     }
