@@ -12,7 +12,7 @@ const user = {
     "role": "admin"
 }
 
-const Users = () => {
+const Users = ({ setModalOpen, setModalChildren }) => {
     const [showFilter, setShowFilter] = useState(false)
     const [selectAllCheckBox, setSelectAllCheckBox] = useState(false)
 
@@ -28,7 +28,7 @@ const Users = () => {
             <div className="table w-full px-4 bg-slate-50 rounded-md my-5 relative">
                 <div className="top  py-5 flex items-center justify-between ">
                     <input type="text" id="simple-search" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg px-3 py-2 mr-5 w-96 outline-none" placeholder="Search" required="" />
-                    <button className="flex items-center w-max gap-2 text-sm rounded-md bg-blue-500 text-white px-3 py-2 mx-2"><AiOutlinePlus className="" />Add User</button>
+                    {/* <button className="flex items-center w-max gap-2 text-sm rounded-md bg-blue-500 text-white px-3 py-2 mx-2"><AiOutlinePlus className="" />Add User</button> */}
                     <button className="flex items-center gap-2 text-sm rounded-md bg-blue-500 text-white px-3 py-2" onClick={handleFilterClick}><BsFilterRight /> Filters</button>
 
                     {/* filter list */}
@@ -63,9 +63,9 @@ const Users = () => {
                         </tr>
                     </thead>
                     <tbody >
-                        <UserRow user={user} selectAllCheckBox={selectAllCheckBox} />
-                        <UserRow user={user} selectAllCheckBox={selectAllCheckBox} />
-                        <UserRow user={user} selectAllCheckBox={selectAllCheckBox} />
+                        <UserRow user={user} selectAllCheckBox={selectAllCheckBox} setModalChildren={setModalChildren} setModalOpen={setModalOpen} />
+                        <UserRow user={user} selectAllCheckBox={selectAllCheckBox} setModalChildren={setModalChildren} setModalOpen={setModalOpen} />
+                        <UserRow user={user} selectAllCheckBox={selectAllCheckBox} setModalChildren={setModalChildren} setModalOpen={setModalOpen} />
                     </tbody>
                 </table>
             </div>

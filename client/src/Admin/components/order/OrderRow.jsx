@@ -4,7 +4,7 @@ import { BsThreeDots, BsFilterRight } from "react-icons/bs"
 import ProductModal from "../modals/product/ProductModal"
 import ConfirmDeleteModal from "../modals/ConfirmDeleteModal"
 
-const ProductRow = ({ product, setModalChildren, setModalOpen }) => {
+const OrderRow = ({ product, setModalChildren, setModalOpen }) => {
     const [showActions, setShowActions] = useState(false)
 
     const handleOnActionClick = () => {
@@ -22,10 +22,11 @@ const ProductRow = ({ product, setModalChildren, setModalOpen }) => {
     return (
         <>
             <tr className="border-b-2 ">
-                <td className="text-sm py-2 text-left pl-2">{product.name}</td>
-                <td className="text-sm py-2 text-left pl-2 capitalize">{product.category}</td>
-                <td className="text-sm py-2 text-left pl-2">{product.size[0]}</td>
-                <td className="text-sm py-2 text-left pl-2">{currencyFormatter.format(product.price)}</td>
+                <td className="text-sm py-2 text-left pl-2">{"jaskdfhjahhdfjka"}</td>
+                <td className="text-sm py-2 text-left pl-2 capitalize">{"Nikita Ghadigaonkar"}</td>
+                <td className="text-sm py-2 text-left pl-2">{"28-08-2002"}</td>
+                <td className="text-sm py-2 text-left pl-2">{currencyFormatter.format(500)}</td>
+                <td className="text-sm py-2 text-left pl-2">{"PENDING"}</td>
                 <td className="relative inline-block" onClick={handleOnActionClick}><BsThreeDots className="cursor-pointer relative inline-block" />
                     {/* product options */}
                     {showActions && <div className="absolute right-0 w-28 flex flex-col gap-2 text-sm rounded-lg bg-slate-200 z-50">
@@ -42,4 +43,4 @@ const ProductRow = ({ product, setModalChildren, setModalOpen }) => {
     )
 }
 
-export default ProductRow
+export default OrderRow

@@ -1,10 +1,11 @@
 import currencyFormatter from "../../utils/currencyFormatter"
 import CheckoutProduct from "./CheckoutProduct"
 import {useSelector} from "react-redux"
-const CheckoutRight = () => {
+
+
+const CheckoutRight = ({products, setProducts}) => {
     let {cart,total} = useSelector(state=>state.cart)
 
-    
   return (
     <div className='flex flex-col w-[300px] gap-5 my-16'>
         <div className="orderSummary flex flex-col gap-3">
@@ -26,8 +27,8 @@ const CheckoutRight = () => {
         <div className="cartSummery flex flex-col">
             <h1 className="text-xl font-semibold ">CART SUMMERY</h1>
             {
-                cart.map(product=>{
-                    return <CheckoutProduct key={product._id} product={product}/>
+                products && products.map(product=>{
+                    return <CheckoutProduct key={product._id} product={product}  products={products} setProducts={setProducts}/>
                 })
             }
         </div>

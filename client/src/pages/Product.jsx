@@ -3,12 +3,10 @@ import currencyFormatter from "../utils/currencyFormatter";
 import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { addItemToCart } from "../slices/cartSlice";
-import {toast} from "react-hot-toast"
-import { Navigate, useLocation, useNavigate} from "react-router-dom"
-import { VITE_API_URL } from "../config";
+import { addCartProduct} from "../slices/cartSlice";
+import { Link, useLocation} from "react-router-dom"
+
 import ProductsMoreImage from "../components/Product/ProductsMoreImage";
-import addProductToTheCart from "../../../server/controllers/cart/addProductToTheCart";
 import ProductsMoreImages from "../components/Loading/ProductsMoreImages";
 import ProductDescription from "../components/Product/ProductDescription";
 import FetchRequest from "../utils/fetch";
@@ -30,35 +28,10 @@ const Product = () => {
   const slug = pathname.split("/")[2]
 
 
-  const addFunction = async()=>{
-    try {
-      const res = await fetch(`${VITE_API_URL}/cart/add`,{
-        method:"POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({
-            product :{
-              name: product.name,
-              slug:product.slug,
-              price: product.price,
-              imageUrl : product.imageUrl[0],
-              quantity:1
-            }
-        })
-      })
-      const result = await res.json()
-      dispatch(addProductToTheCart(result.product))
-    } catch (err) {
-      console.log(err)
-    }
-  }
   const handleAddToCart =()=>{
-    addFunction() 
     // add size in the backend and also in frontend inside the cart section product will have name, title, size, price, quantity 🆗
     // search for better solution for refreshing the site
-    dispatch(addItemToCart(product))
+    dispatch(addCartProduct(product))
     
   }
 
@@ -84,6 +57,8 @@ const Product = () => {
     arr[arr.length - 1] = size.toLowerCase()
     window.location.href = `/product/${arr.join("-")}`
   }
+
+
   
   useEffect(()=>{
     setLoading(true)
@@ -184,7 +159,7 @@ const Product = () => {
                 <button
                   className="text-base font-semibold rounded-lg border-slate-400 outline-0 px-3 py-2 bg-pink-500 text-white hover:bg-pink-400 my-1 lg:text-lg"
                 >
-                  Buy Now
+                  <Link to={"/checkout"} state={{comingFrom : 'productPage', products: [product]}}>Buy Now</Link>
                 </button>
                 <button
                   className="text-base font-semibold rounded-lg border-slate-400 outline-0 px-3 py-2 bg-pink-500 text-white hover:bg-pink-400 flex items-center gap-1 lg:text-lg"
@@ -195,16 +170,10 @@ const Product = () => {
                 </button>
                 <div className="favorite">
                 {favorite ? (
-                  <MdFavorite
-                  className="text-pink-500 w-6 h-6 cursor-pointer"
-                  onClick={handleRemoveFromWishlist}
-                  />
+                  <MdFavorite className="text-pink-500 w-6 h-6 cursor-pointer" onClick={handleRemoveFromWishlist}/>
                 ) : (
-                <MdFavoriteBorder
-                className="text-pink-500 w-6 h-6 cursor-pointer"
-                onClick={handleAddToWishlist}
-                />
-                )}
+                <MdFavoriteBorder className="text-pink-500 w-6 h-6 cursor-pointer" onClick={handleAddToWishlist}/>)
+                }
                 </div>
               </div>
             </div>

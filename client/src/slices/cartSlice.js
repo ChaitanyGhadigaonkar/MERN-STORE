@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-hot-toast";
 import { STATUSES } from "../utils/status";
 import { VITE_API_URL } from "../config";
+import FetchRequest from "../utils/fetch";
 
 const cartSlice = createSlice({
   name: "cart",
@@ -11,34 +12,6 @@ const cartSlice = createSlice({
     total: 0,
   },
   reducers: {
-    addItemToCart(state, action) {
-      let isExists = false;
-      state.cart.forEach((product) => {
-        if (product.name === action.payload.name) {
-          isExists = true;
-        }
-      });
-      if (isExists) {
-        toast.error("Item already in the cart");
-        return state;
-      } else {
-        state.cart.push(action.payload);
-        state.total += action.payload.price;
-        toast.success("Item added successfully");
-      }
-    },
-    removeItemFromCart(state, action) {
-      const newArray = state.cart.filter(
-        (product) => product.name !== action.payload.name
-      );
-      toast.success("Item removed successfully");
-      state.total -= action.payload.price;
-      state.cart = newArray;
-    },
-    clearCart(state, action) {
-      state.cart = [];
-      state.total = 0;
-    },
     setInitialTotal(state, action) {
       state.total = action.type;
     },
@@ -59,6 +32,29 @@ const cartSlice = createSlice({
       })
       .addCase(fetchCarts.rejected, (state, action) => {
         state.status = STATUSES.ERROR;
+      })
+      .addCase(removeCartProduct.fulfilled, (state, action) => {
+        state.cart = action.payload.products;
+        state.total -= action.payload.price;
+        toast.success("Item removed successfully");
+      })
+      .addCase(addCartProduct.fulfilled, (state, action) => {
+        const { product } = action.payload;
+        if (!product) {
+          toast.error("product already exists");
+          return;
+        }
+        state.cart.push(product);
+        state.total += product.price;
+        toast.success("Product added successfully");
+      })
+      .addCase(addCartProduct.rejected, (state, action) => {
+        toast.error("something went's wrong");
+      })
+
+      .addCase(clearAllProducts.fulfilled, (state, action) => {
+        state.cart = [];
+        state.total = 0;
       });
   },
 });
@@ -82,7 +78,46 @@ export const fetchCarts = createAsyncThunk(
   }
 );
 
-export const { addItemToCart, removeItemFromCart, clearCart, setInitialTotal } =
-  cartSlice.actions;
+export const removeCartProduct = createAsyncThunk(
+  "remove/product",
+  async (productName) => {
+    const { cart } = await FetchRequest(
+      `cart/delete`,
+      "DELETE",
+      JSON.stringify({
+        product: {
+          name: productName,
+        },
+      })
+    );
+    return cart;
+  }
+);
+export const addCartProduct = createAsyncThunk(
+  "add/product",
+  async (product) => {
+    const result = await FetchRequest(
+      `cart/add`,
+      "POST",
+      JSON.stringify({
+        product: {
+          name: product.name,
+          slug: product.slug,
+          price: product.price,
+          imageUrl: product.imageUrl[0],
+          quantity: 1,
+        },
+      })
+    );
+    return { success: result.success, product: result.product };
+  }
+);
+
+export const clearAllProducts = createAsyncThunk("add/clearAll", async () => {
+  const result = await FetchRequest("cart/clearAll", "PUT", null);
+  return result;
+});
+
+export const { setInitialTotal } = cartSlice.actions;
 
 export default cartSlice.reducer;

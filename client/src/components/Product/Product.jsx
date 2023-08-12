@@ -49,7 +49,7 @@ const Product = ({ product }) => {
   return (
     <div className="w-64 flex flex-col items-center gap-2 rounded-md shadow-lg relative">
       <div className="top cursor-pointer" onClick={handleProductClick}>
-        <img src={product.imageUrl} alt="Hoodie image" srcSet="" />
+        <img src={product.imageUrl[0]} alt="Hoodie image" srcSet="" />
       </div>
       <div className="bottom px-8 py-3 my-2">
         <p className="category text-sm text-slate-600">{product.category}</p>

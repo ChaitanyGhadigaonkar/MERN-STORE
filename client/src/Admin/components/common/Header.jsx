@@ -1,25 +1,29 @@
 import { Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useState } from 'react'
 import { toast } from 'react-hot-toast'
 import {MdLogout} from "react-icons/md"
 import {RxHamburgerMenu} from "react-icons/rx"
 import {HiChevronLeft} from "react-icons/hi"
+import {removeUserCredential} from "../../../slices/userSlice"
+import logout from '../../../utils/logout'
+
 
 const Header = ({showSidebar, setShowSidebar}) => {
     const [show,setShow] = useState(false)
+    const dispatch = useDispatch()
 
     const {userInfo} = useSelector(state => state.user)
 
     const handleLogout=async()=>{
-        setShow(false)
-        const success = await logout();
-        if(success){
-          toast.success("Logout successfully")
-          dispatch(removeUserCredential())
-        }else{
-          toast.error("Something went's wrong")
-        }
+      setShow(false)
+      const success = await logout();
+      if(success){
+        toast.success("Logout successfully")
+        dispatch(removeUserCredential())
+      }else{
+        toast.error("Something went's wrong")
+      }
     }
   return (
     <>

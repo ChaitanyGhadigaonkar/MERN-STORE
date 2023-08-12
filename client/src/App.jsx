@@ -27,7 +27,7 @@ import Products from './Admin/pages/Products';
 import Orders from './Admin/pages/Orders';
 import Users from './Admin/pages/Users';
 import Modal from './Admin/components/modals/Modal';
-import ProductRow from './Admin/components/product/ProductRow';
+import PageNotFound from './pages/PageNotFound';
 
 
 function App() {
@@ -43,42 +43,20 @@ function App() {
 
   useEffect(()=>{
     // dispatch(fetchProducts())
-    dispatch(fetchCarts())
-    dispatch(fetchWishlistItems())
-    dispatch(fetchAddress())
+    if(userInfo?.role !== "admin" ){
+      dispatch(fetchCarts())
+      dispatch(fetchWishlistItems())
+      dispatch(fetchAddress())
+    }
+
   },[userInfo])
 
-  const product = {
-    "_id": "64931a7e1f36ceddda500b31",
-    "name": "DUDEME Developer",
-    "slug": "dudeme-developer-s",
-    "imageUrl": [
-      "https://m.media-amazon.com/images/I/519tzhwc9aL._UX522_.jpg",
-      "https://m.media-amazon.com/images/I/51+04pSkqFL._UX425_.jpg",
-      "https://m.media-amazon.com/images/I/61skyMwcmhL._UX522_.jpg",
-      "https://m.media-amazon.com/images/I/51o3JyFB19L._UX425_.jpg"
-    ],
-    "description": "DudeMe's combed cotton t-shirts are softer and stronger than regular cotton t-shirts. The cottons we use are made by further treating it after it's been picked, then spun into yarn to remove short fibers, which are prone to breakage. This process helps us deliver the best quality t-shirts without impurities or short protruding threads. \n All our t-shirts are tailored to be regular fit for men and women. We always want to make you feel wearing dudeme's creations to be an awesome feel & we work towards tailoring the perfect stitch that never let's you down.",
-    "category": "tshirt",
-    "quantity": 10,
-    "size": [
-      "S",
-      "M",
-      "L",
-      "XL",
-      "XXL"
-    ],
-    "price": 599,
-    "createdAt": "2023-06-21T15:42:54.909Z",
-    "updatedAt": "2023-06-21T15:42:54.909Z",
-    "__v": 0
-  }
   return (
     <>
       <BrowserRouter>
         <Modal showModal={modalOpen} setModalOpen={setModalOpen} children={modalChildren} />
         {
-          userInfo.role === "admin" ? 
+           userInfo && userInfo.role === "admin" ? 
           <div className='grid grid-columns-2'>
             <Header showSidebar={showSidebar} setShowSidebar={setShowSidebar}/>
             <div className={`h-[calc(100vh-55px)] main-container grid ${showSidebar ? "grid-cols-[230px_1fr]" : "grid-cols-[100px_1fr]"}`}>
@@ -90,6 +68,7 @@ function App() {
               <Route path='/products' element={<Products setModalChildren={setModalChildren} setModalOpen={setModalOpen}/>}/>
               <Route path='/orders' element={<Orders setModalChildren={setModalChildren} setModalOpen={setModalOpen}/>}/>
               <Route path='/users' element={<Users setModalChildren={setModalChildren} setModalOpen={setModalOpen}/>}/>
+              <Route path='*' element={<PageNotFound/>}/>
             </Routes>
             </div>
           </div>
@@ -115,6 +94,7 @@ function App() {
               <Route path='/forgot-password' element={<ForgotPassword />} />
               <Route path='/products' element={<SearchProducts />} />
               <Route path='/dashboard/:field' element={<Dashboard />} />
+              <Route path='*' element={<PageNotFound/>}/>
             </Routes>
             <Footer />
           </>

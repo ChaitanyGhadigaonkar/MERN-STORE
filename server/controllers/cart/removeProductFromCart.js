@@ -1,27 +1,30 @@
 import expressAsyncHandler from "express-async-handler";
 import Cart from "../../models/cart.js";
 
+const removeProductFromCart = expressAsyncHandler(async (req, res) => {
+  const { _id } = req.user._id;
 
-const removeProductFromCart = expressAsyncHandler(async(req,res)=>{
-    const {_id} = req.user._id;
-    
-    const {product} = req.body;
+  const { product } = req.body;
 
-    const productName = product.name
-    const cart = await Cart.findOne({user:_id})
-    if(!cart){
-        res.status(400)
-        throw new Error("cart does not exists")
-    }
-    const productsArray = cart.products;
-    
-    const newArray = productsArray.filter((product)=>{
-         return product.name !== productName
-    })
+  const productName = product.name;
+  const cart = await Cart.findOne({ user: _id });
+  if (!cart) {
+    res.status(400);
+    throw new Error("cart does not exists");
+  }
+  const productsArray = cart.products;
 
-    const result = await Cart.findByIdAndUpdate( cart._id, {products : newArray})
+  const newArray = productsArray.filter((product) => {
+    return product.name !== productName;
+  });
 
-    res.status(201).json({success:true, msg:"Remove from the cart successfully"})
-})
+  const result = await Cart.findByIdAndUpdate(
+    cart._id,
+    { products: newArray },
+    { new: true }
+  );
 
-export default removeProductFromCart
+  res.status(201).json({ success: true, cart: result });
+});
+
+export default removeProductFromCart;

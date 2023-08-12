@@ -21,3 +21,4 @@ export const collection = {
 
 export const categoryOptions = ["tshirt", "hoodie", "cap"];
 export const sizeOptions = ["S", "M", "L", "XL", "XXL"];
+export const roleOptions = ["admin", "user"];
