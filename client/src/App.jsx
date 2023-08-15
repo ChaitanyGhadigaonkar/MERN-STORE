@@ -4,7 +4,7 @@ import Navbar from './components/Common/Navbar';
 import Footer from './components/Common/Footer';
 import Login from "./pages/Login"
 import SignUp from "./pages/SignUp"
-import Product from './pages/product';
+import Product from './pages/Product';
 import CheckOut from './pages/CheckOut';
 import { useEffect, useState } from 'react';
 import { fetchCarts, setInitialTotal } from './slices/cartSlice';
