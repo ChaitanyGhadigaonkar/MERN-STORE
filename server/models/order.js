@@ -1,5 +1,35 @@
 import mongoose from "mongoose";
 
+// changing the order schema
+
+const orderProductSchema = new mongoose.Schema({
+  slug: {
+    type: String,
+    require: true,
+  },
+  name: {
+    type: String,
+    require: true,
+  },
+  imageUrl: {
+    type: String,
+    require: true,
+  },
+  size: {
+    type: String,
+    require: true,
+    enum: ["S", "M", "L", "XL", "XXL"],
+  },
+  price: {
+    type: Number,
+    require: true,
+  },
+  quantity: {
+    type: Number,
+    require: true,
+  },
+});
+
 const orderSchema = new mongoose.Schema(
   {
     user: {
@@ -8,8 +38,8 @@ const orderSchema = new mongoose.Schema(
       require: [true, "Please provide user"],
     },
     products: {
-      type: [],
-      require: [true, "There must be one product for ordering"],
+      type: [orderProductSchema],
+      require: true,
     },
     total: {
       type: Number,

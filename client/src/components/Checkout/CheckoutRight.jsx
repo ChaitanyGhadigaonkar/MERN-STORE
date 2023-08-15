@@ -1,3 +1,4 @@
+import { TAXES } from "../../constants"
 import currencyFormatter from "../../utils/currencyFormatter"
 import CheckoutProduct from "./CheckoutProduct"
 import {useSelector} from "react-redux"
@@ -16,12 +17,12 @@ const CheckoutRight = ({products, setProducts}) => {
             </div>
             <div className="flex justify-between">
                 <h3 className="text-base font-semibold opacity-80">Taxes</h3>
-                <h3 className="text-base font-semibold opacity-80">{currencyFormatter.format(49)}</h3>
+                <h3 className="text-base font-semibold opacity-80">{currencyFormatter.format(TAXES)}</h3>
             </div>
             <hr className="border-[1px] border-black"/>
             <div className="flex justify-between">
                 <h3 className="text-lg font-semibold ">Total</h3>
-                <h3 className="text-lg font-semibold">{currencyFormatter.format(total+ 49) }</h3>
+                <h3 className="text-lg font-semibold">{currencyFormatter.format(total+ TAXES) }</h3>
             </div>
         </div>
         <div className="cartSummery flex flex-col">

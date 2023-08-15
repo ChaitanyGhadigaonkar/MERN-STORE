@@ -105,6 +105,7 @@ export const addCartProduct = createAsyncThunk(
           slug: product.slug,
           price: product.price,
           imageUrl: product.imageUrl[0],
+          size: product.size,
           quantity: 1,
         },
       })

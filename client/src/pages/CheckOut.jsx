@@ -10,6 +10,15 @@ const CheckOut = () => {
     const location = useLocation()
 
     const [products, setProducts] = useState()
+    // the product should be in this format
+    // {
+    //   "slug": "dudeme-developer-s",
+    //   "name":"DUDEME Developer",
+    //   "image":"https://m.media-amazon.com/images/I/519tzhwc9aL._UX522_.jpg",
+    //   "size":"S",
+    //   "price":599,
+    //   "quantity":2
+    // }
 
     const handlePlaceOrder =(e)=>{
         e.preventDefault()
@@ -21,12 +30,12 @@ const CheckOut = () => {
           navigate("/")
       }else{
         const {comingForm, products} = location.state
-          setProducts(products)
+          setProducts(products);
       }
     },[])
   return (
     <div className="flex flex-col my-4 px-3 w-full items-center justify-evenly md:flex-row">
-      <CheckoutLeft/>
+      <CheckoutLeft products={products} setProducts={setProducts}/>
       <CheckoutRight products={products} setProducts={setProducts}/>
     </div>
   );

@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { toast } from "react-hot-toast"
 import {useSelector} from "react-redux"
 import {useLocation, useNavigate} from "react-router-dom"
+import FetchRequest from "../../utils/fetch"
+import { TAXES } from "../../constants"
 
-const CheckoutLeft = () => {
+const CheckoutLeft = ({products, setProducts}) => {
     const navigate = useNavigate()
     const location = useLocation()
-
 
     const { address } = useSelector((state) => state.address);
     const { userInfo } = useSelector((state)=>state.user)
@@ -31,9 +32,26 @@ const CheckoutLeft = () => {
       setFormData({address: selectedAddress[0].address, city:selectedAddress[0].city, state:selectedAddress[0].state, country : selectedAddress[0].country, pinCode : selectedAddress[0].pinCode})
     }
     
-    const handlePlaceOrder =(e)=>{
+    const handlePlaceOrder = async(e)=>{
         e.preventDefault()
-        navigate("/")
+        // calculating the total 
+        let total = TAXES;
+        products.forEach((product)=>{
+            total += product.price;
+        })
+
+        // placing the order 
+        if(products.length !== 0){
+          const result = await FetchRequest("order", "POST", JSON.stringify({products: products, total : total}))
+          if(result.success){
+            toast.success("Ordered Successfully")
+            navigate("/dashboard/orders")
+          }else{
+            toast.error("Something went's wrong. Please try after sometime")
+          }
+        }else{
+          toast.error("No products in order list")
+        }
     }
     
   return (
