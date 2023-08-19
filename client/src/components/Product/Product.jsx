@@ -39,7 +39,7 @@ const Product = ({ product }) => {
 
 
   useEffect(()=>{
-      wishlist.forEach(item=>{
+      wishlist?.forEach(item=>{
         if(item.product.name === product.name){
           setFavorite(true)
         }

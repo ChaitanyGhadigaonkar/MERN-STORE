@@ -13,7 +13,7 @@ const FilterComponent = ({showFilter ,setShowFilter,setMaxPrice,setMinPrice,cate
     setPrice(e.target.value)
   }
   return (
-    <div className={`${showFilter ? "fixed" : "hidden"} left-0 top-0 w-96 h-screen bg-slate-300 py-10 px-8`}>
+    <div className={`${showFilter ? "fixed" : "hidden"} left-0 top-0 w-96 h-screen bg-slate-300 py-10 px-8 z-50`}>
       <div className="top flex items-center justify-between">
         <div className="flex items-center justify-between gap-5">
           <FaFilter/>

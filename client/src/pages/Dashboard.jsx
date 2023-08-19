@@ -6,6 +6,7 @@ import AccountDetails from "../components/Dashboard/AccountDetails"
 import Address from "../components/Dashboard/Address/Address"
 import Orders from "../components/Dashboard/Orders/Orders"
 import WishList from "../components/Dashboard/Wishlist/WishList"
+import OrderDetails from "../components/Dashboard/Orders/Order/OrderDetails"
 
 const Dashboard = () => {
     const {userInfo} = useSelector(state=>state.user)
@@ -13,7 +14,7 @@ const Dashboard = () => {
     const {field} = useParams()
 
     useEffect(()=>{
-        if(userInfo === null){
+        if(!localStorage.getItem("userInfo")){
             navigate("/login")
         }
     },[])
@@ -28,6 +29,7 @@ const Dashboard = () => {
         {field === "address" && <Address/>}
         {field === "orders" && <Orders/>}
         {field === "wishlist" && <WishList/>}
+        {field === "order" && <OrderDetails />}
         </div>
         
     </div>

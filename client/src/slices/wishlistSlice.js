@@ -47,10 +47,18 @@ const wishlistSlice = createSlice({
         state.wishlist = action.payload;
         state.status = STATUSES.IDLE;
       })
+      .addCase(fetchWishlistItems.rejected, (state, action) => {
+        state.wishlist = [];
+        state.status = STATUSES.IDLE;
+      })
       .addCase(addItem.fulfilled, (state, action) => {
         state.wishlist.push(action.payload);
         state.status = STATUSES.IDLE;
         toast.success("Item added to the wishlist");
+      })
+      .addCase(addItem.rejected, (state, action) => {
+        state.status = STATUSES.IDLE;
+        toast.success("something went's wrong");
       })
       .addCase(removeItem.fulfilled, (state, action) => {
         const newArray = state.wishlist.filter(
@@ -59,6 +67,9 @@ const wishlistSlice = createSlice({
         state.wishlist = newArray;
         toast.success("Item removed from the wishlist");
         state.status = STATUSES.IDLE;
+      })
+      .addCase(removeItem.rejected, (state, action) => {
+        toast.success("something went's wrong");
       });
   },
 });

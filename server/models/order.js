@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { mongo } from "mongoose";
 
 // changing the order schema
 
@@ -30,6 +30,31 @@ const orderProductSchema = new mongoose.Schema({
   },
 });
 
+// order address schema
+
+const orderAddressSchema = mongoose.Schema({
+  address: {
+    type: String,
+    require: [true, "address is required"],
+  },
+  city: {
+    type: String,
+    require: [true, "city is required"],
+  },
+  state: {
+    type: String,
+    require: [true, "state is required"],
+  },
+  pinCode: {
+    type: Number,
+    require: [true, "pinCode is required"],
+  },
+  country: {
+    type: String,
+    require: [true, "country is required"],
+  },
+});
+
 const orderSchema = new mongoose.Schema(
   {
     user: {
@@ -39,6 +64,10 @@ const orderSchema = new mongoose.Schema(
     },
     products: {
       type: [orderProductSchema],
+      require: true,
+    },
+    addressDetails: {
+      type: orderAddressSchema,
       require: true,
     },
     total: {

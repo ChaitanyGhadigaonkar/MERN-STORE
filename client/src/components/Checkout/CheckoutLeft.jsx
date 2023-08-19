@@ -42,7 +42,8 @@ const CheckoutLeft = ({products, setProducts}) => {
 
         // placing the order 
         if(products.length !== 0){
-          const result = await FetchRequest("order", "POST", JSON.stringify({products: products, total : total}))
+          const addressDetails = {address : formData.address, city : formData.city, state : formData.state, pinCode : formData.pinCode, country : formData.country}
+          const result = await FetchRequest("order", "POST", JSON.stringify({products: products, total : total, addressDetails}))
           if(result.success){
             toast.success("Ordered Successfully")
             navigate("/dashboard/orders")

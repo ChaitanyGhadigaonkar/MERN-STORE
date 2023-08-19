@@ -3,12 +3,17 @@ import Order from "../../models/order.js";
 
 const addRouter = expressAsyncHandler(async (req, res) => {
   const userId = req.user._id;
-  const { products, total } = req.body;
+  const { products, total, addressDetails } = req.body;
   // product = {slug, name, image, size, price, quantity}
 
   // default status will be pending
 
-  const order = await Order.create({ user: userId, products: products, total });
+  const order = await Order.create({
+    user: userId,
+    products: products,
+    total,
+    addressDetails,
+  });
 
   res.status(201).json({ success: true, order });
 });
