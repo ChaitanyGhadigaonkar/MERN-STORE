@@ -6,18 +6,18 @@ import {MdLogout} from "react-icons/md"
 import {RxHamburgerMenu} from "react-icons/rx"
 import {HiChevronLeft} from "react-icons/hi"
 import {removeUserCredential} from "../../../slices/userSlice"
-import logout from '../../../utils/logout'
+import FetchRequest from '../../../utils/fetch'
 
 
 const Header = ({showSidebar, setShowSidebar}) => {
-    const [show,setShow] = useState(false)
+    const [show,setShow] = useState(false) 
     const dispatch = useDispatch()
 
     const {userInfo} = useSelector(state => state.user)
 
     const handleLogout=async()=>{
       setShow(false)
-      const success = await logout();
+      const {success} = await FetchRequest("auth/logout", "GET", null);
       if(success){
         toast.success("Logout successfully")
         dispatch(removeUserCredential())

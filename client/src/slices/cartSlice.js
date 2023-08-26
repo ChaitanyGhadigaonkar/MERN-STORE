@@ -64,13 +64,7 @@ const cartSlice = createSlice({
 export const fetchCarts = createAsyncThunk(
   "carts/fetch",
   async (state, action) => {
-    const res = await fetch(`${VITE_API_URL}/cart`, {
-      headers: {
-        "content-type": "application/json",
-      },
-      credentials: "include",
-    });
-    const { products } = await res.json();
+    const { products } = await FetchRequest("cart", "GET", null);
     if (products === undefined) {
       return [];
     }

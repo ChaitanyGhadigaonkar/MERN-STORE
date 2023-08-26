@@ -4,7 +4,8 @@ import expressAsyncHandler from "express-async-handler";
 
 const protect = expressAsyncHandler(async (req, res, next) => {
   let token;
-  token = req.cookies.jwt;
+  // token = req.cookies.jwt;  // not working on the render & vercel due to public domain
+  token = req.header("authToken");
 
   if (token) {
     const { id } = jwt.verify(token, process.env.JWT_SECRETE);

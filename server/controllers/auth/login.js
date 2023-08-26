@@ -18,7 +18,7 @@ const login = expressAsyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("Email or password is wrong");
   } else {
-    generateToken(res, user._id);
+    const authToken = generateToken(res, user._id);
     res.status(200).json({
       success: true,
       msg: "Login successfully",
@@ -27,6 +27,7 @@ const login = expressAsyncHandler(async (req, res) => {
         name: user.name,
         email: user.email,
         role: user.role,
+        authToken,
       },
     });
   }

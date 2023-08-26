@@ -6,7 +6,6 @@ import {BsSearch} from "react-icons/bs"
 import {AiOutlineShoppingCart,AiOutlineDown} from "react-icons/ai"
 import {MdLogout} from "react-icons/md"
 import {useDispatch, useSelector} from "react-redux"
-import logout from '../../utils/logout'
 import { toast } from 'react-hot-toast'
 import { removeUserCredential } from '../../slices/userSlice'
 import Product from '../Search/Product'
@@ -69,7 +68,7 @@ const Navbar = () => {
   }
   const handleLogout=async()=>{
     setShow(false)
-    const success = await logout();
+    const {success} = await FetchRequest("auth/logout", "GET", null);
     if(success){
       toast.success("Logout successfully")
       dispatch(removeUserCredential())
