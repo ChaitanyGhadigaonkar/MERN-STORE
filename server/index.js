@@ -17,6 +17,7 @@ import addressRouter from "./routes/addressRoutes.js";
 import orderRouter from "./routes/orderRouter.js";
 import wishListRouter from "./routes/wishListRoutes.js";
 import moreUserRouter from "./routes/moreUserInfo.js";
+import corsOptions from "./config/corsOptions.js";
 
 connectDB();
 
@@ -28,10 +29,6 @@ cloudinary.config({
   api_secret: CLOUDINARY_API_SECRETE,
 });
 
-const corsOptions = {
-  origin: "*",
-  credentials: true, //access-control-allow-credentials:true
-};
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
