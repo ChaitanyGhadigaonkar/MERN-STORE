@@ -1,7 +1,7 @@
 
 import FilterComponent from "../components/Filters/FilterComponent";
 import PrevNext from "../components/Common/PrevNext";
-import Product from "../components/Product/product"
+import Product from "../components/Product/Product"
 import ProductLoader from "../components/Loading/Product"
 import { LIMIT } from "../config";
 import FetchRequest from "../utils/fetch";
