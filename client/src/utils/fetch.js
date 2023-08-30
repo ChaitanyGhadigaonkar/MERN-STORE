@@ -8,7 +8,7 @@ const FetchRequest = async (url, method, body) => {
         credentials: "include",
         headers: {
           "content-type": "application/json",
-          authToken: JSON.parse(localStorage.getItem("userInfo")).authToken,
+          authToken: JSON.parse(localStorage.getItem("userInfo"))?.authToken,
         },
       });
       const result = await res.json();
@@ -23,7 +23,7 @@ const FetchRequest = async (url, method, body) => {
         method,
         headers: {
           "content-type": "application/json",
-          authToken: JSON.parse(localStorage.getItem("userInfo")).authToken,
+          authToken: JSON.parse(localStorage.getItem("userInfo"))?.authToken,
         },
         credentials: "include", // just for cookie
         body: body,

@@ -43,7 +43,7 @@ function App() {
 
   useEffect(()=>{
     // dispatch(fetchProducts())
-    if(userInfo?.role !== "admin" ){
+    if( localStorage.getItem("userInfo") && userInfo?.role !== "admin" ){
       dispatch(fetchCarts())
       dispatch(fetchWishlistItems())
       dispatch(fetchAddress())
@@ -79,13 +79,13 @@ function App() {
             <div className="absolute top-28 md:top-20 right-8 cursor-pointer" onClick={()=>setShowFilter(prev=>!prev)}><FaFilter className='text-2xl text-pink-500'/></div>
             <Routes>
               <Route index path='/' element={<Home />} />
-              <Route path='/shop' element={<Shop showFilter={showFilter} setShowFilter={setShowFilter}/>} />
+              <Route path='/shop' element={<Shop  showFilter={showFilter} setShowFilter={setShowFilter}/>} />
           
-              <Route path='/tshirts' element={<Collections key={collection.tshirt.category} head={collection.tshirt.head} paragraph={collection.tshirt.paragraph} category={collection.tshirt.category}/> }  />
+              <Route path='/tshirts' element={<Collections key={collection.tshirt.category} head={collection.tshirt.head} paragraph={collection.tshirt.paragraph} category={collection.tshirt.category} showFilter={showFilter} setShowFilter={setShowFilter}/> }  />
 
-              <Route path='/hoodies' element={<Collections key={collection.hoodie.category} head={collection.hoodie.head} paragraph={collection.hoodie.paragraph} category={collection.hoodie.category} /> } />
+              <Route path='/hoodies' element={<Collections key={collection.hoodie.category} head={collection.hoodie.head} paragraph={collection.hoodie.paragraph} category={collection.hoodie.category}  showFilter={showFilter} setShowFilter={setShowFilter}/> } />
 
-              <Route path='/caps' element={<Collections key={collection.cap.category} head={collection.cap.head} paragraph={collection.cap.paragraph} category={collection.cap.category}/> }  />
+              <Route path='/caps' element={<Collections key={collection.cap.category} head={collection.cap.head} paragraph={collection.cap.paragraph} category={collection.cap.category} showFilter={showFilter} setShowFilter={setShowFilter}/> }  />
 
               <Route path='/product/:slug' element={<Product />} />
               <Route path='/checkout' element={<CheckOut />} />

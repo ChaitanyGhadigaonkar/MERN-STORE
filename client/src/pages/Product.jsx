@@ -29,7 +29,7 @@ const Product = () => {
 
 
   const handleAddToCart =()=>{
-    // add size in the backend and also in frontend inside the cart section product will have name, title, size, price, quantity 🆗
+    // add size in the backend and also in frontend inside the cart section product will have name, title, size, price, quantity 
     // search for better solution for refreshing the site
     dispatch(addCartProduct(product))
     
@@ -68,7 +68,7 @@ const Product = () => {
           setProduct(JSON.parse(JSON.stringify(product)))
           setProductImage(product.imageUrl[0])
         }else{
-
+          
         }
         setLoading(false)
       }
@@ -82,10 +82,16 @@ const Product = () => {
       }
     })
   },[product])
+
+  const NoProductFound = ()=>{
+      return <div>
+        <h1 className="font-semibold text-2xl text-center">Sorry this particular size is not available </h1>
+      </div>
+  }
+  if(!product && !loading) return <NoProductFound/>
+
   return (
     <>
-    { product && !loading ? 
-      <>
       <div className="flex flex-col px-3 py-8 ">
         <div className="flex flex-col items-center ">
           {
@@ -184,9 +190,7 @@ const Product = () => {
       }
       
     </div>
-      </> : <h1 className="font-semibold text-2xl text-center">Sorry this particular size is not available </h1>
-    }
-    </>
+      </> 
   );
 };
 

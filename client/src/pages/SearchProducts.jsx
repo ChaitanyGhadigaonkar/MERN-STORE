@@ -1,5 +1,5 @@
 import React from 'react'
-import Product from "../components/Product/product"
+import Product from '../components/Product/Product'
 import  {useLocation, useSearchParams}  from 'react-router-dom'
 import { useSelector } from 'react-redux'
 const SearchProducts = () => {

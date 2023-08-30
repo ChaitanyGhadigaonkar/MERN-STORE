@@ -4,10 +4,10 @@ import { useEffect, useState} from "react"
 import { LIMIT } from "../config"
 import FetchRequest from "../utils/fetch"
 import PrevNext from "../components/Common/PrevNext"
-import Product from "../components/Product/product"
+import Product from "../components/Product/Product"
 
 
-const Collections = ({head, paragraph, category}) => {
+const Collections = ({head, paragraph, category, showFilter, setShowFilter}) => {
   const [loading, setLoading] = useState(true)
   const [products, setProducts] = useState()
   const [pageNo, setPageNo] = useState(1)
