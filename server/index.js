@@ -34,6 +34,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+// root directory
+app.get("", (req, res) => {
+  res.status(200).send("Welcome to MERN Store api");
+});
+
 // routes
 app.use("/api/auth", userRouter);
 app.use("/api/product", productRouter);
