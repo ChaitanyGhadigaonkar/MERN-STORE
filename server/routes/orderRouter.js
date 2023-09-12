@@ -17,7 +17,7 @@ orderRouter.post("/", protect, addRouter);
 
 // admin route
 
-orderRouter.put("/:orderId", protect, confirmOrder);
+orderRouter.put("/admin/:orderId", protect, confirmOrder);
 
 orderRouter.get("/admin/all", protect, getAllOrdersAdmin);
 

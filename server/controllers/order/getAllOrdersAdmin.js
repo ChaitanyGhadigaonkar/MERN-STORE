@@ -20,7 +20,7 @@ const getAllOrdersAdmin = expressAsyncHandler(async (req, res) => {
   const endIndex = page * limit;
 
   let filters = {};
-  if (isPending) {
+  if (isPending === "pending" || isPending === "success") {
     filters = { status: isPending };
   }
   let orders;
@@ -42,6 +42,9 @@ const getAllOrdersAdmin = expressAsyncHandler(async (req, res) => {
       endIndex < (await Order.find(filters).countDocuments().exec())
         ? page + 1
         : null,
+    total: Math.ceil(
+      (await Order.find(filters).countDocuments().exec()) / limit
+    ),
   });
 });
 export default getAllOrdersAdmin;

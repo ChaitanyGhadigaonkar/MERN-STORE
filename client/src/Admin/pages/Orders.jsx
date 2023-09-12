@@ -1,14 +1,40 @@
 
 import { BsFilterRight } from "react-icons/bs"
-import { useState } from "react"
-import ProductRow from "../components/product/ProductRow"
+import { useEffect, useState } from "react"
 import OrderRow from "../components/order/OrderRow"
+import {useDispatch, useSelector} from "react-redux"
+import { getAllOrders } from "../../slices/admin/orderSlice"
+import { LIMIT } from "../../config"
+import Pagination from "../components/common/Pagination"
 
 const Orders = () => {
   const [showFilter, setShowFilter] = useState(false)
+  
+  const [pageNo, setPageNo] = useState(1)
+  const [status, setStatus] = useState("all")
+  const [oldestFirst, setOldestFirst] = useState("no")
+  
+  const dispatch = useDispatch()
+
+
+  useEffect(()=>{
+    // arguments are in this order isPending , limit, pageNo, oldestFirst
+    const input = {
+      isPending : status, limit : 2, page : pageNo, oldestFirst : oldestFirst
+    }
+    dispatch(getAllOrders(input))
+  },[pageNo, oldestFirst])
+
+  const { orders, prev, next, total } = useSelector(state=>state.adminOrders)
+
   const handleFilterClick = () => {
     setShowFilter(prev => !prev)
   }
+  
+  const handleOnStatusChange =()=>{
+    setOldestFirst((prev) => prev === "no" ? "yes" : "no")
+  } 
+
 
   return (
     <div className='my-10 mx-5 overflow-x-auto' id="admin-products-container">
@@ -48,22 +74,22 @@ const Orders = () => {
             <tr className="">
               <th className="text-sm py-2 text-left pl-2">ORDER NUMBER</th>
               <th className="text-sm py-2 text-left pl-2">USER</th>
-              <th className="text-sm py-2 text-left pl-2">DATE</th>
+              <th className="text-sm py-2 text-left pl-2 cursor-pointer" onClick={handleOnStatusChange} title="Sort By Date">DATE</th>
               <th className="text-sm py-2 text-left pl-2">TOTAL</th>
               <th className="text-sm py-2 text-left pl-2">STATUS</th>
               <th></th>
             </tr>
           </thead>
           <tbody >
-            <OrderRow/>
-            <OrderRow/>
-            <OrderRow/>
-            {/* <ProductRow product={product} setModalChildren={setModalChildren} setModalOpen={setModalOpen} />
-            <ProductRow product={product} setModalChildren={setModalChildren} setModalOpen={setModalOpen} />
-            <ProductRow product={product} setModalChildren={setModalChildren} setModalOpen={setModalOpen} /> */}
+            {
+              orders && orders.map((order)=>{
+                return <OrderRow key={order._id} order={order} />
+              })
+            }
           </tbody>
         </table>
       </div>
+      <Pagination totalPages={total} pageNo={pageNo} setPageNo={setPageNo}/>
     </div>
   )
 }

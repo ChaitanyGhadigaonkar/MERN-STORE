@@ -3,8 +3,9 @@ import currencyFormatter from "../../../utils/currencyFormatter"
 import { BsThreeDots, BsFilterRight } from "react-icons/bs"
 import ProductModal from "../modals/product/ProductModal"
 import ConfirmDeleteModal from "../modals/ConfirmDeleteModal"
+import {dashDateFormate} from "../../../utils/changeDateFormat"
 
-const OrderRow = ({ product, setModalChildren, setModalOpen }) => {
+const OrderRow = ({ order, setModalChildren, setModalOpen }) => {
     const [showActions, setShowActions] = useState(false)
 
     const handleOnActionClick = () => {
@@ -22,11 +23,15 @@ const OrderRow = ({ product, setModalChildren, setModalOpen }) => {
     return (
         <>
             <tr className="border-b-2 ">
-                <td className="text-sm py-2 text-left pl-2">{"jaskdfhjahhdfjka"}</td>
+                <td className="text-sm py-2 text-left pl-2">{order._id}</td>
                 <td className="text-sm py-2 text-left pl-2 capitalize">{"Nikita Ghadigaonkar"}</td>
-                <td className="text-sm py-2 text-left pl-2">{"28-08-2002"}</td>
-                <td className="text-sm py-2 text-left pl-2">{currencyFormatter.format(500)}</td>
-                <td className="text-sm py-2 text-left pl-2">{"PENDING"}</td>
+                <td className="text-sm py-2 text-left pl-2">{dashDateFormate(order.createdAt)}</td>
+                <td className="text-sm py-2 text-left pl-2">{currencyFormatter.format(order.total)}</td>
+                <td className={`text-sm py-2 text-left pl-2 }`}> 
+                    <p className={`text-white py-1 px-2 rounded-md w-fit ${order.status === "pending" ? "bg-red-500 " : "bg-green-500"}`}>
+                        {order.status}
+                    </p>
+                </td>
                 <td className="relative inline-block" onClick={handleOnActionClick}><BsThreeDots className="cursor-pointer relative inline-block" />
                     {/* product options */}
                     {showActions && <div className="absolute right-0 w-28 flex flex-col gap-2 text-sm rounded-lg bg-slate-200 z-50">

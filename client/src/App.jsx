@@ -42,7 +42,7 @@ function App() {
   const {userInfo} = useSelector(state=>state.user)
 
   useEffect(()=>{
-    // dispatch(fetchProducts())
+    dispatch(fetchProducts())
     if( localStorage.getItem("userInfo") && userInfo?.role !== "admin" ){
       dispatch(fetchCarts())
       dispatch(fetchWishlistItems())
