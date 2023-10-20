@@ -1,15 +1,20 @@
 import { VITE_API_URL } from "../config";
 
 const FetchRequest = async (url, method, body) => {
+  const headers = {
+    "content-type": "application/json",
+  };
+  if (JSON.parse(localStorage.getItem("userInfo"))) {
+    headers["authToken"] = JSON.parse(
+      localStorage.getItem("userInfo")
+    ).authToken;
+  }
   if (method === "GET") {
     try {
       const res = await fetch(`${VITE_API_URL}/${url}`, {
         method: "GET",
         credentials: "include",
-        headers: {
-          "content-type": "application/json",
-          authToken: JSON.parse(localStorage.getItem("userInfo"))?.authToken,
-        },
+        headers,
       });
       const result = await res.json();
       return result;
@@ -21,10 +26,7 @@ const FetchRequest = async (url, method, body) => {
     try {
       const res = await fetch(`${VITE_API_URL}/${url}`, {
         method,
-        headers: {
-          "content-type": "application/json",
-          authToken: JSON.parse(localStorage.getItem("userInfo"))?.authToken,
-        },
+        headers,
         credentials: "include", // just for cookie
         body: body,
       });

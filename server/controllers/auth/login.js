@@ -15,8 +15,7 @@ const login = expressAsyncHandler(async (req, res) => {
   }
   const isCorrect = await user.comparePassword(password);
   if (!isCorrect) {
-    res.status(400);
-    throw new Error("Email or password is wrong");
+    res.status(400).json({ success: false, msg: "Email or Password is wrong" });
   } else {
     const authToken = generateToken(res, user._id);
     res.status(200).json({

@@ -7,26 +7,28 @@ import updateController from "../controllers/auth/update.js";
 import protect from "../middleware/authMiddleware.js";
 import forgotPassword from "../controllers/auth/forgotPassword.js";
 import resetPassword from "../controllers/auth/resetPassword.js";
+import getAllUsers from "../controllers/auth/getAllUsers.js";
 
+const userRouter = express.Router();
 
-const userRouter = express.Router()
+// register a user
+userRouter.post("/register", register);
 
+userRouter.post("/login", loginController);
 
-// register a user 
-userRouter.post("/register", register)
-
-userRouter.post("/login", loginController)
-
-userRouter.get("/logout", logoutController)
+userRouter.get("/logout", logoutController);
 
 // protected routes
-userRouter.put("/update", protect, updateController)
+userRouter.put("/update", protect, updateController);
 
-userRouter.get("/profile", protect, profileController)
+userRouter.get("/profile", protect, profileController);
 
 // forgot and reset password
-userRouter.post("/forgot-password", forgotPassword)
+userRouter.post("/forgot-password", forgotPassword);
 
-userRouter.post("/reset-password/:content", resetPassword)
+userRouter.post("/reset-password/:content", resetPassword);
 
-export default userRouter
+// admin
+userRouter.get("/admin/users", protect, getAllUsers);
+
+export default userRouter;
