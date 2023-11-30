@@ -1,17 +1,8 @@
-import { BsFilterRight } from "react-icons/bs";
-import { AiOutlinePlus } from "react-icons/ai";
 import { useEffect, useState } from "react";
 import UserRow from "../components/user/UserRow";
 import FetchRequest from "../../utils/fetch";
 import Pagination from "../components/common/Pagination";
-import { LIMIT } from "../../config";
-
-const user = {
-  _id: "64a2e63a8271417a2ea2f152",
-  name: "Nikita Ghadigaonkar",
-  email: "nikitaghadigaonkar123@gmail.com",
-  role: "admin",
-};
+import useDebounce from "../../Hooks/useDebounce";
 
 const Users = ({ setModalOpen, setModalChildren }) => {
   const [showFilter, setShowFilter] = useState(false);
@@ -21,10 +12,9 @@ const Users = ({ setModalOpen, setModalChildren }) => {
 
   const [type, setType] = useState("all");
   const [users, setUsers] = useState();
+  const [updateUserData, setUpdateUserData] = useState(false);
+  const [searchTerm, handleSearch] = useDebounce(300);
 
-  const handleFilterClick = () => {
-    setShowFilter((prev) => !prev);
-  };
   const handleRoleChange = () => {
     if (type === "all") {
       setType("admin");
@@ -39,9 +29,13 @@ const Users = ({ setModalOpen, setModalChildren }) => {
     }
   };
 
+  const handleSearchChange = (e) => {
+    handleSearch(e.target.value);
+  };
+
   const getUsers = async () => {
     const { users, total, prev, next } = await FetchRequest(
-      `auth/admin/users?page=${page}&limit=${5}&type=${type}`,
+      `auth/admin/users?page=${page}&limit=${5}&type=${type}&searchTerm=${searchTerm}`,
       "GET",
       null
     );
@@ -52,7 +46,8 @@ const Users = ({ setModalOpen, setModalChildren }) => {
 
   useEffect(() => {
     getUsers();
-  }, [page, type]);
+    setUpdateUserData(false);
+  }, [page, type, updateUserData, searchTerm]);
 
   return (
     <div
@@ -64,20 +59,22 @@ const Users = ({ setModalOpen, setModalChildren }) => {
       </div>
       <div className="table w-full px-4 bg-slate-50 rounded-md my-5 relative">
         <div className="top  py-5 flex items-center justify-between ">
+          {/* <form
+            onSubmit={fetchUsersFromName}
+            className="flex items-center gap-2"
+          > */}
           <input
-            type="text"
+            type="search"
             id="simple-search"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg px-3 py-2 mr-5 w-96 outline-none"
-            placeholder="Search"
-            required=""
+            placeholder="Search users by name"
+            onChange={handleSearchChange}
           />
-          {/* <button className="flex items-center w-max gap-2 text-sm rounded-md bg-blue-500 text-white px-3 py-2 mx-2"><AiOutlinePlus className="" />Add User</button> */}
-          <button
-            className="flex items-center gap-2 text-sm rounded-md bg-blue-500 text-white px-3 py-2"
-            onClick={handleFilterClick}
-          >
-            <BsFilterRight /> Filters
-          </button>
+          {/* <button className="flex items-center w-max gap-2 text-sm rounded-md bg-blue-500 text-white px-3 py-2 mx-2">
+              <BsSearch className="" />
+              Search
+            </button>
+          </form> */}
 
           {/* filter list */}
           {showFilter && (
@@ -147,6 +144,7 @@ const Users = ({ setModalOpen, setModalChildren }) => {
                   selectAllCheckBox={selectAllCheckBox}
                   setModalChildren={setModalChildren}
                   setModalOpen={setModalOpen}
+                  setUpdateUserData={setUpdateUserData}
                 />
               ))}
           </tbody>

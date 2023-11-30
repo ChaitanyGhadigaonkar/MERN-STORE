@@ -1,16 +1,23 @@
-import { createPortal } from "react-dom"
-import {AiOutlineClose} from "react-icons/ai"
+import { createPortal } from "react-dom";
+import { AiOutlineClose } from "react-icons/ai";
 
-const Modal = ({showModal, setModalOpen, children}) => {
-    if(!showModal) return
+const Modal = ({ showModal, setModalOpen, children }) => {
+  if (!showModal) return;
 
-    return createPortal(
+  return createPortal(
     <div className="fixed inset-0 w-screen h-screen flex flex-col justify-center items-center bg-[rgba(0,0,0,0.5)]">
-        <div className="header w-fit flex flex-col justify-end bg-slate-300 rounded-lg py-5 px-5">
-            <div className="self-end"><AiOutlineClose onClick={()=>setModalOpen(false)} className="text-xl cursor-pointer"/></div>
-            {children}
+      <div className="header lg:w-[600px] md:w-2/3 flex flex-col justify-end bg-slate-300 rounded-lg py-5 px-5">
+        <div className="self-end">
+          <AiOutlineClose
+            onClick={() => setModalOpen(false)}
+            className="text-xl cursor-pointer"
+          />
         </div>
-    </div>, document.getElementById("modal"))
-}
+        {children}
+      </div>
+    </div>,
+    document.getElementById("modal")
+  );
+};
 
-export default Modal
+export default Modal;

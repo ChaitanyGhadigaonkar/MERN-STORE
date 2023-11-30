@@ -31,9 +31,9 @@ const adminProductSlice = createSlice({
 export const getAdminProducts = createAsyncThunk(
   "getProducts",
   async (input) => {
-    const { page, limit, size, category, sortByPrice } = input;
+    const { page, limit, size, category, sortByPrice, searchTerm } = input;
     const result = await FetchRequest(
-      `product/admin/getProducts?limit=${limit}&page=${page}&size=${size}&category=${category}&sortByPrice=${sortByPrice}`
+      `product/admin/getProducts?limit=${limit}&page=${page}&size=${size}&category=${category}&sortByPrice=${sortByPrice}&searchTerm=${searchTerm}`
     );
     return result;
   }

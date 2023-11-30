@@ -8,6 +8,8 @@ import protect from "../middleware/authMiddleware.js";
 import forgotPassword from "../controllers/auth/forgotPassword.js";
 import resetPassword from "../controllers/auth/resetPassword.js";
 import getAllUsers from "../controllers/auth/getAllUsers.js";
+import changeRole from "../controllers/auth/changeRole.js";
+import deleteUser from "../controllers/auth/deleteUser.js";
 
 const userRouter = express.Router();
 
@@ -30,5 +32,7 @@ userRouter.post("/reset-password/:content", resetPassword);
 
 // admin
 userRouter.get("/admin/users", protect, getAllUsers);
+userRouter.put("/admin/update", protect, changeRole);
+userRouter.delete("/admin/delete/:id", protect, deleteUser);
 
 export default userRouter;

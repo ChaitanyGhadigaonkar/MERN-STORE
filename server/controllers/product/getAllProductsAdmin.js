@@ -11,7 +11,7 @@ const getAllProductsAdmin = expressAsyncHandler(async (req, res) => {
     throw new Error("Not authorized");
   }
 
-  let { page, limit, category, size, sortByPrice } = req.query;
+  let { page, limit, category, size, sortByPrice, searchTerm } = req.query;
 
   page = parseInt(page);
   limit = parseInt(limit);
@@ -26,6 +26,10 @@ const getAllProductsAdmin = expressAsyncHandler(async (req, res) => {
   }
   if (size !== "all") {
     filter.size = size;
+  }
+  if (searchTerm !== "") {
+    const regex = new RegExp(searchTerm, "i");
+    filter.name = regex;
   }
   let products;
   if (sortByPrice !== "default") {
