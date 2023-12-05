@@ -28,6 +28,7 @@ import Orders from "./Admin/pages/Orders";
 import Users from "./Admin/pages/Users";
 import Modal from "./Admin/components/modals/Modal";
 import PageNotFound from "./pages/PageNotFound";
+import useDarkTheme from "./Hooks/useDarkTheme";
 
 function App() {
   const dispatch = useDispatch();
@@ -37,6 +38,8 @@ function App() {
   const [modalChildren, setModalChildren] = useState(
     <>This is Modal Component</>
   );
+
+  const [theme, setTheme] = useDarkTheme("light");
 
   const { cart } = useSelector((state) => state.cart);
   const { userInfo } = useSelector((state) => state.user);
@@ -50,8 +53,24 @@ function App() {
     }
   }, [userInfo]);
 
+  useEffect(() => {
+    const handler = () => {
+      if (window.innerWidth < 768) {
+        // small screen
+        setShowSidebar(false);
+      } else {
+        setShowSidebar(true);
+      }
+    };
+    window.addEventListener("resize", handler);
+
+    return () => {
+      window.removeEventListener("resize", handler);
+    };
+  }, [window.onresize]);
+
   return (
-    <>
+    <div className="dark:text-[#EEF5FF] dark:bg-[#222831]">
       <BrowserRouter>
         <Modal
           showModal={modalOpen}
@@ -59,64 +78,66 @@ function App() {
           children={modalChildren}
         />
         {userInfo && userInfo.role === "admin" ? (
-          <div className="grid grid-columns-2">
+          <div className="flex flex-col min-h-screen max-w-screen-xl mx-auto ">
             <Header
               showSidebar={showSidebar}
               setShowSidebar={setShowSidebar}
+              setTheme={setTheme}
+              theme={theme}
             />
-            <div
-              className={`h-[calc(100vh-55px)] main-container grid ${
-                showSidebar ? "grid-cols-[230px_1fr]" : "grid-cols-[100px_1fr]"
-              }`}
-            >
-              <aside>
-                <Sidebar
-                  showSidebar={showSidebar}
-                  setShowSidebar={setShowSidebar}
-                />
-              </aside>
-              <Routes>
-                <Route
-                  index
-                  path="/"
-                  element={<AdminDashboard />}
-                />
-                <Route
-                  path="/products"
-                  element={
-                    <Products
-                      setModalChildren={setModalChildren}
-                      setModalOpen={setModalOpen}
+            <div className={`flex-grow flex-1 `}>
+              <div className="flex flex-grow w-full">
+                <aside className="w-24 md:w-1/5 flex items-center justify-center">
+                  <Sidebar
+                    showSidebar={showSidebar}
+                    setShowSidebar={setShowSidebar}
+                  />
+                </aside>
+                <div className="flex-grow flex-1 w-full">
+                  <Routes>
+                    <Route
+                      index
+                      path="/"
+                      element={<AdminDashboard />}
                     />
-                  }
-                />
-                <Route
-                  path="/orders"
-                  element={
-                    <Orders
-                      setModalChildren={setModalChildren}
-                      setModalOpen={setModalOpen}
+                    <Route
+                      path="/products"
+                      element={
+                        <Products
+                          setModalChildren={setModalChildren}
+                          setModalOpen={setModalOpen}
+                        />
+                      }
                     />
-                  }
-                />
-                <Route
-                  path="/users"
-                  element={
-                    <Users
-                      setModalChildren={setModalChildren}
-                      setModalOpen={setModalOpen}
+                    <Route
+                      path="/orders"
+                      element={
+                        <Orders
+                          setModalChildren={setModalChildren}
+                          setModalOpen={setModalOpen}
+                        />
+                      }
                     />
-                  }
-                />
-                <Route
-                  path="*"
-                  element={<PageNotFound />}
-                />
-              </Routes>
+                    <Route
+                      path="/users"
+                      element={
+                        <Users
+                          setModalChildren={setModalChildren}
+                          setModalOpen={setModalOpen}
+                        />
+                      }
+                    />
+                    <Route
+                      path="*"
+                      element={<PageNotFound />}
+                    />
+                  </Routes>
+                </div>
+              </div>
             </div>
           </div>
         ) : (
-          <>
+          <div className="flex flex-col min-h-screen max-w-screen-xl mx-auto ">
             <Navbar />
             <Toast />
             <div
@@ -217,10 +238,10 @@ function App() {
               />
             </Routes>
             <Footer />
-          </>
+          </div>
         )}
       </BrowserRouter>
-    </>
+    </div>
   );
 }
 

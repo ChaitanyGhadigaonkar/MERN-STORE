@@ -1,4 +1,5 @@
-import React from "react";
+// import { PureComponent } from "react";
+import { FaUsers, FaMoneyBillTrendUp } from "react-icons/fa6";
 import {
   LineChart,
   Line,
@@ -7,34 +8,130 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
+  ResponsiveContainer,
 } from "recharts";
+
+const data = [
+  {
+    name: "Page A",
+    uv: 4000,
+    pv: 2400,
+    amt: 2400,
+  },
+  {
+    name: "Page B",
+    uv: 3000,
+    pv: 1398,
+    amt: 2210,
+  },
+  {
+    name: "Page C",
+    uv: 2000,
+    pv: 9800,
+    amt: 2290,
+  },
+  {
+    name: "Page D",
+    uv: 2780,
+    pv: 3908,
+    amt: 2000,
+  },
+  {
+    name: "Page E",
+    uv: 1890,
+    pv: 4800,
+    amt: 2181,
+  },
+  {
+    name: "Page F",
+    uv: 2390,
+    pv: 3800,
+    amt: 2500,
+  },
+  {
+    name: "Page G",
+    uv: 3490,
+    pv: 4300,
+    amt: 2100,
+  },
+];
+
+const DashboardBlocks = [
+  {
+    Icon: FaUsers,
+    title: "Total Users",
+    numbers: 10928,
+  },
+  {
+    Icon: FaMoneyBillTrendUp,
+    title: "Stock",
+    numbers: 8236,
+  },
+  {
+    Icon: FaMoneyBillTrendUp,
+    title: "Revenue",
+    numbers: 6642,
+  },
+];
 
 const Dashboard = () => {
   return (
-    <div className="my-10 mx-10">
-      <h1 className="text-xl font-bold ">Dashboard</h1>
-      <LineChart
-        width={400}
-        height={400}
-        data={{ name: "chaitany Ghadigoankar" }}
-        margin={{ top: 5, right: 20, left: 10, bottom: 5 }}
-      >
-        <XAxis dataKey="name" />
-        <Tooltip />
-        <CartesianGrid stroke="#f5f5f5" />
-        <Line
-          type="monotone"
-          dataKey="uv"
-          stroke="#ff7300"
-          yAxisId={0}
-        />
-        <Line
-          type="monotone"
-          dataKey="pv"
-          stroke="#387908"
-          yAxisId={1}
-        />
-      </LineChart>
+    <div className="w-full ">
+      <h1 className="text-xl font-bold my-5 mx-5">Dashboard</h1>
+      {/*  */}
+      <div className="flex w-full gap-8 items-center mx-5">
+        {DashboardBlocks.map((block, index) => (
+          <div
+            key={index}
+            className="flex flex-col w-[150px] border border-slate-400 px-3 py-4 rounded-md justify-center items-center gap-2"
+          >
+            <div className="flex w-full justify-center items-center gap-4">
+              <block.Icon
+                width={15}
+                height={15}
+              />
+              <p className="text-base font-semibold ">{block.title}</p>
+            </div>
+            <h1 className="font-bold text-lg ">{block.numbers}</h1>
+          </div>
+        ))}
+      </div>
+      {/* charts */}
+      <div className="w-ful py-10">
+        <ResponsiveContainer
+          width="100%"
+          height={400}
+        >
+          <LineChart
+            width={500}
+            height={300}
+            data={data}
+            margin={{
+              top: 5,
+              right: 30,
+              left: 20,
+              bottom: 5,
+            }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Line
+              type="monotone"
+              dataKey="pv"
+              stroke="#8884d8"
+              activeDot={{ r: 8 }}
+            />
+            <Line
+              type="monotone"
+              dataKey="uv"
+              stroke="#82ca9d"
+            />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
     </div>
   );
 };

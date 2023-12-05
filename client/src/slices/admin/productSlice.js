@@ -33,7 +33,9 @@ export const getAdminProducts = createAsyncThunk(
   async (input) => {
     const { page, limit, size, category, sortByPrice, searchTerm } = input;
     const result = await FetchRequest(
-      `product/admin/getProducts?limit=${limit}&page=${page}&size=${size}&category=${category}&sortByPrice=${sortByPrice}&searchTerm=${searchTerm}`
+      `product/admin/getProducts?limit=${limit}&page=${page}&size=${size}&category=${category}&sortByPrice=${sortByPrice}&searchTerm=${searchTerm}`,
+      "GET",
+      null
     );
     return result;
   }

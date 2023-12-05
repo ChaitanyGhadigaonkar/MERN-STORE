@@ -1,36 +1,34 @@
 import { VITE_API_URL } from "../config";
+import axios from "axios";
+
+//TODO: use axios
+
+const content = axios.create({
+  baseURL: VITE_API_URL,
+  headers: {
+    "content-type": "application/json",
+    authToken: JSON.parse(localStorage.getItem("userInfo"))
+      ? JSON.parse(localStorage.getItem("userInfo")).authToken
+      : "",
+  },
+  withCredentials: true,
+});
 
 const FetchRequest = async (url, method, body) => {
-  const headers = {
-    "content-type": "application/json",
-  };
-  if (JSON.parse(localStorage.getItem("userInfo"))) {
-    headers["authToken"] = JSON.parse(
-      localStorage.getItem("userInfo")
-    ).authToken;
-  }
   if (method === "GET") {
     try {
-      const res = await fetch(`${VITE_API_URL}/${url}`, {
-        method: "GET",
-        credentials: "include",
-        headers,
-      });
-      const result = await res.json();
-      return result;
-    } catch (err) {
-      console.log(err);
+      const response = await content.get(`${url}`);
+      // console.log(response.data);
+      return response.data;
+    } catch (error) {
+      console.log(error);
     }
   }
   if (method === "POST" || "DELETE" || "PUT") {
     try {
-      const res = await fetch(`${VITE_API_URL}/${url}`, {
-        method,
-        headers,
-        credentials: "include", // just for cookie
-        body: body,
-      });
-      const result = await res.json();
+      const res = await content.post(`${url}`, body);
+      // console.log(res.data);
+      const result = await res.data;
       return result;
     } catch (err) {
       console.log(err);

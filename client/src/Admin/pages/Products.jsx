@@ -88,7 +88,7 @@ const Products = ({ setModalChildren, setModalOpen }) => {
           {showFilter && <ProductFilter />}
         </div>
 
-        <table className="w-full my-5 border-collapse border rounded-sm">
+        <table className="w-full my-5 border-collapse border rounded-sm dark:text-dark">
           <thead className="bg-slate-100">
             <tr className="">
               <th className="text-sm py-2 text-left pl-2">PRODUCT NAME</th>

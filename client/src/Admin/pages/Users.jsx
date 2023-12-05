@@ -110,8 +110,8 @@ const Users = ({ setModalOpen, setModalChildren }) => {
           )}
         </div>
 
-        <table className="w-full my-5 border-collapse border rounded-sm">
-          <thead className="bg-slate-100">
+        <table className="w-full my-5 border-collapse border rounded-sm  dark:text-dark">
+          <thead className="bg-slate-100 ">
             <tr className="">
               <th>
                 <input
